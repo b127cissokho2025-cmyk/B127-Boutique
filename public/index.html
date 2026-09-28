@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#000">
+<title>B127 Boutique</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#080808;color:#fff}
+header{background:#000;padding:18px;text-align:center;border-bottom:1px solid #b88920}
+.logo{font-size:34px;font-weight:bold;color:#d4af37}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+button{background:#d4af37;color:#000;border:0;padding:11px 16px;border-radius:8px;font-weight:bold}
+input,textarea,select{width:100%;padding:12px;margin:6px 0 12px;border-radius:7px;border:1px solid #555;background:#171717;color:#fff}
+main{max-width:1100px;margin:auto;padding:18px}
+.hero{text-align:center;padding:30px 10px}
+.hero h1{color:#d4af37;font-size:38px}
+.search{margin:15px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:#151515;border:1px solid #333;border-radius:12px;padding:18px}
+.icon{font-size:55px;text-align:center}
+.price{color:#d4af37;font-size:22px;font-weight:bold}
+section{margin-top:25px}
+.hidden{display:none}
+.box{background:#111;border:1px solid #333;padding:18px;border-radius:12px;margin-top:15px}
+small{color:#aaa}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">👑 B127</div>
+  <div>BOUTIQUE EN LIGNE</div>
+  <nav>
+    <button onclick="show('home')">🏠 Accueil</button>
+    <button onclick="show('account')">👤 Compte</button>
+    <button onclick="show('seller')">🏪 Vendeur</button>
+    <button onclick="show('cart')">🛒 Panier (<span id="cartCount">0</span>)</button>
+  </nav>
+</header>
+
+<main>
+
+<section id="home">
+  <div class="hero">
+    <h1>B127 Boutique</h1>
+    <p>Vos envies, notre priorité</p>
+    <input class="search" id="search" placeholder="🔎 Rechercher un produit..." oninput="renderProducts()">
+  </div>
+
+  <h2>🛍️ Nos produits</h2>
+  <div id="products" class="grid"></div>
+</section>
+
+<section id="account" class="hidden">
+  <h2>👤 Mon compte</h2>
+
+  <div class="box">
+    <h3>Créer un compte</h3>
+    <input id="rname" placeholder="Nom complet">
+    <input id="rphone" placeholder="Téléphone">
+    <input id="remail" type="email" placeholder="E-mail">
+    <input id="rpass" type="password" placeholder="Mot de passe">
+    <button onclick="register()">Créer mon compte</button>
+  </div>
+
+  <div class="box">
+    <h3>Connexion</h3>
+    <input id="lemail" type="email" placeholder="E-mail">
+    <input id="lpass" type="password" placeholder="Mot de passe">
+    <button onclick="login()">Se connecter</button>
+  </div>
+
+  <div id="userInfo" class="box"></div>
+</section>
+
+<section id="cart" class="hidden">
+  <h2>🛒 Mon panier</h2>
+  <div id="cartItems"></div>
+
+  <div class="box">
+    <h3>Passer la commande</h3>
+    <input id="cname" placeholder="Nom complet">
+    <input id="cphone" placeholder="Téléphone / WhatsApp">
+    <textarea id="caddress" placeholder="Adresse de livraison"></textarea>
+    <select id="payment">
+      <option value="Wave">Wave</option>
+      <option value="Orange Money">Orange Money</option>
+      <option value="Paiement à la livraison">Paiement à la livraison</option>
+    </select>
+    <button onclick="order()">📦 Commander</button>
+  </div>
+</section>
+
+<section id="seller" class="hidden">
+  <h2>🏪 Espace vendeur</h2>
+
+  <div class="box">
+    <h3>Créer ma boutique</h3>
+    <input id="sname" placeholder="Nom de ma boutique">
+    <input id="sphone" placeholder="Téléphone">
+    <input id="scat" placeholder="Catégorie">
+    <button onclick="createSeller()">Créer ma boutique</button>
+  </div>
+
+  <div class="box">
+    <h3>Ajouter un produit</h3>
+    <input id="pname" placeholder="Nom du produit">
+    <input id="pprice" type="number" placeholder="Prix en FCFA">
+    <input id="pcat" placeholder="Catégorie">
+    <input id="picon" placeholder="Emoji, ex: 📱">
+    <button onclick="addProduct()">Ajouter le produit</button>
+  </div>
+
+  <div id="sellerInfo" class="box"></div>
+</section>
+
+</main>
+
+<script>
+const API='';
+let token=localStorage.getItem('b127_token')||'';
+let cart=JSON.parse(localStorage.getItem('b127_cart')||'[]');
+let products=[];
+
+function headers(){
+  const h={'Content-Type':'application/json'};
+  if(token) h.Authorization='Bearer '+token;
+  return h;
+}
+
+async function api(path,options={}){
+  const r=await fetch(API+path,{
+    ...options,
+    headers:{...headers(),...(options.headers||{})}
+  });
+  const data=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(data.error||'Erreur');
+  return data;
+}
+
+function show(id){
+  ['home','account','cart','seller'].forEach(x=>{
+    document.getElementById(x).classList.add('hidden');
+  });
+  document.getElementById(id).classList.remove('hidden');
+
+  if(id==='cart') renderCart();
+  if(id==='seller') loadSeller();
+}
+
+async function loadProducts(){
+  try{
+    const data=await api('/api/products');
+    products=data.products||[];
+    renderProducts();
+  }catch(e){
+    document.getElementById('products').innerHTML='<p>Impossible de charger les produits.</p>';
+  }
+}
+
+function renderProducts(){
+  const q=(document.getElementById('search')?.value||'').toLowerCase();
+  const list=products.filter(p=>
+    p.name.toLowerCase().includes(q) ||
+    p.category.toLowerCase().includes(q)
+  );
+
+  document.getElementById('products').innerHTML=list.map(p=>`
+    <div class="card">
+      <div class="icon">${p.icon||'🛍️'}</div>
+      <h3>${p.name}</h3>
+      <small>${p.category}</small>
+      <p class="price">${Number(p.price).toLocaleString('fr-FR')} FCFA</p>
+      <p>Stock : ${p.stock}</p>
+      <button onclick="addCart(${p.id})">🛒 Ajouter</button>
+    </div>
+  `).join('') || '<p>Aucun produit trouvé.</p>';
+}
+
+function addCart(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  const old=cart.find(x=>x.id===id);
+  if(old) old.quantity++;
+  else cart.push({...p,quantity:1});
+  saveCart();
+  alert('Produit ajouté au panier ✅');
+}
+
+function saveCart(){
+  localStorage.setItem('b127_cart',JSON.stringify(cart));
+  document.getElementById('cartCount').textContent=
+    cart.reduce((s,x)=>s+x.quantity,0);
+}
+
+function renderCart(){
+  const box=document.getElementById('cartItems');
+  if(!cart.length){
+    box.innerHTML='<p>Votre panier est vide.</p>';
+    return;
+  }
+
+  box.innerHTML=cart.map((p,i)=>`
+    <div class="card">
+      ${p.icon} <b>${p.name}</b><br>
+      ${Number(p.price).toLocaleString('fr-FR')} FCFA × ${p.quantity}
+      <button onclick="removeCart(${i})">❌</button>
+    </div>
+  `).join('');
+
+  const total=cart.reduce((s,x)=>s+x.price*x.quantity,0);
+  box.innerHTML+=`<div class="box"><h3>Total : ${total.toLocaleString('fr-FR')} FCFA</h3></div>`;
+}
+
+function removeCart(i){
+  cart.splice(i,1);
+  saveCart();
+  renderCart();
+}
+
+async function register(){
+  try{
+    const d=await api('/api/auth/register',{
+      method:'POST',
+      body:JSON.stringify({
+        name:rname.value,
+        phone:rphone.value,
+        email:remail.value,
+        password:rpass.value
+      })
+    });
+    token=d.token;
+    localStorage.setItem('b127_token',token);
+    localStorage.setItem('b127_user',JSON.stringify(d.user));
+    alert('Compte créé avec succès ✅');
+    updateUser();
+  }catch(e){alert(e.message)}
+}
+
+async function login(){
+  try{
+    const d=await api('/api/auth/login',{
+      method:'POST',
+      body:JSON.stringify({
+        email:lemail.value,
+        password:lpass.value
+      })
+    });
+    token=d.token;
+    localStorage.setItem('b127_token',token);
+    localStorage.setItem('b127_user',JSON.stringify(d.user));
+    alert('Connexion réussie ✅');
+    updateUser();
+  }catch(e){alert(e.message)}
+}
+
+function updateUser(){
+  const u=JSON.parse(localStorage.getItem('b127_user')||'null');
+  userInfo.innerHTML=u
+    ? `<h3>Bonjour ${u.name} 👋</h3><p>${u.email}</p><p>${u.phone}</p>
+       <button onclick="logout()">Déconnexion</button>`
+    : '<p>Vous n’êtes pas connecté.</p>';
+}
+
+function logout(){
+  token='';
+  localStorage.removeItem('b127_token');
+  localStorage.removeItem('b127_user');
+  updateUser();
+  alert('Déconnexion effectuée.');
+}
+
+async function createSeller(){
+  try{
+    const d=await api('/api/seller',{
+      method:'POST',
+      body:JSON.stringify({
+        name:sname.value,
+        phone:sphone.value,
+        category:scat.value
+      })
+    });
+    alert('Boutique créée ✅');
+    loadSeller();
+  }catch(e){alert(e.message)}
+}
+
+async function addProduct(){
+  try{
+    await api('/api/products',{
+      method:'POST',
+      body:JSON.stringify({
+        name:pname.value,
+        price:Number(pprice.value),
+        category:pcat.value,
+        icon:picon.value||'🛍️'
+      })
+    });
+    alert('Produit ajouté ✅');
+    pname.value='';
+    pprice.value='';
+    pcat.value='';
+    picon.value='';
+    loadProducts();
+  }catch(e){alert(e.message)}
+}
+
+async function loadSeller(){
+  if(!token){
+    sellerInfo.innerHTML='<p>Connecte-toi d’abord pour gérer ta boutique.</p>';
+    return;
+  }
+  try{
+    const d=await api('/api/seller');
+    if(!d.seller){
+      sellerInfo.innerHTML='<p>Tu n’as pas encore créé de boutique.</p>';
+      return;
+    }
+    sellerInfo.innerHTML=
+      `<h3>🏪 ${d.seller.name}</h3>
+       <p>${d.seller.category}</p>
+       <p>${d.products.length} produit(s)</p>`;
+  }catch(e){sellerInfo.innerHTML='<p>'+e.message+'</p>'}
+}
+
+async function order(){
+  if(!cart.length){
+    alert('Ton panier est vide.');
+    return;
+  }
+
+  try{
+    const d=await api('/api/orders',{
+      method:'POST',
+      body:JSON.stringify({
+        customer_name:cname.value,
+        phone:cphone.value,
+        address:caddress.value,
+        payment:payment.value,
+        items:cart
+      })
+    });
+
+    const message=
+      `Bonjour B127 Boutique 👋%0A%0A`+
+      `Nouvelle commande : ${d.order.order_ref}%0A`+
+      `Client : ${cname.value}%0A`+
+      `Téléphone : ${cphone.value}%0A`+
+      `Adresse : ${caddress.value}%0A`+
+      `Paiement : ${payment.value}%0A`+
+      `Total : ${Number(d.order.total).toLocaleString('fr-FR')} FCFA`;
+
+    cart=[];
+    saveCart();
+    renderCart();
+
+    window.open(
+      'https://wa.me/221783233692?text='+message,
+      '_blank'
+    );
+
+    alert('Commande enregistrée ✅');
+  }catch(e){alert(e.message)}
+}
+
+saveCart();
+updateUser();
+loadProducts();
+</script>
+
+</body>
+</html>
