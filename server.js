@@ -245,6 +245,65 @@ app.get("/api/admin/summary", auth, (req, res) => {
   });
 });
 
+db.exec(`
+  CREATE TABLE IF NOT EXISTS sellers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    phone TEXT DEFAULT '',
+    category TEXT DEFAULT 'Autres',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
+app.get("/api/seller", auth, (req, res) => {
+  const seller = db.prepare(
+    "SELECT * FROM sellers WHERE user_id = ?"
+  ).get(req.user.id);
+
+  const products = db.prepare(
+    "SELECT * FROM products WHERE seller_id = ? ORDER BY id DESC"
+  ).all(req.user.id);
+
+  res.json({ seller: seller || null, products });
+});
+
+app.post("/api/seller", auth, (req, res) => {
+  const name = String(req.body.name || "").trim();
+  const phone = String(req.body.phone || "").trim();
+  const category = String(req.body.category || "Autres").trim();
+
+  if (!name || !phone) {
+    return res.status(400).json({
+      error: "Nom de boutique et téléphone obligatoires"
+    });
+  }
+
+  const existing = db.prepare(
+    "SELECT * FROM sellers WHERE user_id = ?"
+  ).get(req.user.id);
+
+  if (existing) {
+    db.prepare(`
+      UPDATE sellers
+      SET name = ?, phone = ?, category = ?
+      WHERE user_id = ?
+    `).run(name, phone, category, req.user.id);
+  } else {
+    db.prepare(`
+      INSERT INTO sellers (user_id, name, phone, category)
+      VALUES (?, ?, ?, ?)
+    `).run(req.user.id, name, phone, category);
+  }
+
+  res.json({
+    success: true,
+    seller: db.prepare(
+      "SELECT * FROM sellers WHERE user_id = ?"
+    ).get(req.user.id)
+  });
+});
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
