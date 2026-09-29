@@ -154,7 +154,7 @@ function show(id){
 async function loadProducts(){
   try{
     const data=await api('/api/products');
-    products=data.products||[];
+    products=Array.isArray(data) ? data : (data.products||[]);
     renderProducts();
   }catch(e){
     document.getElementById('products').innerHTML='<p>Impossible de charger les produits.</p>';
