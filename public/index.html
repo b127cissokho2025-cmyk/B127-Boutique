@@ -1598,12 +1598,9 @@ return;
 try{
 
 await api(
-'/api/favorites',
+'/api/favorites/'+Number(id),
 {
-method:'POST',
-body:JSON.stringify({
-product_id:id
-})
+method:'POST'
 }
 );
 
@@ -1667,7 +1664,6 @@ Aucun favori.
 </div>
 `;
 }
- api('/api/sellers', ...)
   function renderCart(){
 
 updateCartCount();
@@ -1883,7 +1879,7 @@ $('checkoutPayment').value,
 
 items:
 cart.map(i=>({
-product_id:i.id,
+id:i.id,
 quantity:i.qty
 }))
 
@@ -2362,6 +2358,17 @@ $('sellerCategory')
 }
 );
 
+if(d.token){
+token=d.token;
+}
+
+if(d.user){
+currentUser=d.user;
+}
+
+saveLocal();
+updateAccountUI();
+
 showToast(
 'Boutique créée avec succès',
 'success'
@@ -2504,8 +2511,9 @@ $('productIcon')
 };
 
 if(
-!body.name||
-!body.price
+!body.name ||
+!Number.isFinite(body.price) ||
+body.price < 0
 ){
 
 showToast(
