@@ -291,10 +291,16 @@ app.get("/api/products", (req, res) => {
 });
 
 app.post("/api/products", auth, (req, res) => {
-  if (!["seller", "admin"].includes(req.user.role)) {
-    return res.status(403).json({
-      error: "Créez d'abord votre boutique vendeur"
-    });
+  if (req.user.role !== "admin") {
+    const seller = db.prepare(
+      "SELECT 1 FROM sellers WHERE user_id=?"
+    ).get(req.user.id);
+
+    if (!seller) {
+      return res.status(403).json({
+        error: "Créez d'abord votre boutique vendeur"
+      });
+    }
   }
 
   const name = String(req.body.name || "").trim();
@@ -516,7 +522,7 @@ app.post("/api/orders", auth, (req, res) => {
       const normalized = [];
 
       for (const item of items) {
-        const productId = Number(item.id);
+        const productId = Number(item.id ?? item.product_id);
 
         const quantity = Math.floor(
           Number(
@@ -718,8 +724,10 @@ app.get("/api/favorites", auth, (req, res) => {
   res.json(favorites);
 });
 
-app.post("/api/favorites/:productId", auth, (req, res) => {
-  const productId = Number(req.params.productId);
+app.post(["/api/favorites", "/api/favorites/:productId"], auth, (req, res) => {
+  const productId = Number(
+    req.params.productId ?? req.body.product_id ?? req.body.id
+  );
 
   const product = db.prepare(
     "SELECT id FROM products WHERE id=? AND active=1"
@@ -767,7 +775,7 @@ app.post("/api/favorites/:productId", auth, (req, res) => {
   });
 });
 
-app.post("/api/sellers", auth, (req, res) => {
+app.post(["/api/sellers", "/api/seller"], auth, (req, res) => {
   if (req.user.role === "admin") {
     return res.status(400).json({
       error: "Un administrateur ne peut pas créer une boutique vendeur"
@@ -781,8 +789,14 @@ app.post("/api/sellers", auth, (req, res) => {
   `).get(req.user.id);
 
   if (existing) {
+    const user = db.prepare(
+      "SELECT * FROM users WHERE id=?"
+    ).get(req.user.id);
+
     return res.json({
-      seller: existing
+      seller: existing,
+      user: publicUser(user),
+      token: issueToken(user)
     });
   }
 
@@ -832,9 +846,14 @@ app.post("/api/sellers", auth, (req, res) => {
   });
 
   const seller = createSeller();
+  const user = db.prepare(
+    "SELECT * FROM users WHERE id=?"
+  ).get(req.user.id);
 
   res.status(201).json({
-    seller
+    seller,
+    user: publicUser(user),
+    token: issueToken(user)
   });
 });
 
@@ -931,7 +950,7 @@ app.get("/api/admin/orders", auth, adminOnly, (req, res) => {
 });
 
 app.patch(
-  "/api/admin/orders/:id/status",
+  ["/api/admin/orders/:id/status", "/api/admin/orders/:id"],
   auth,
   adminOnly,
   (req, res) => {
