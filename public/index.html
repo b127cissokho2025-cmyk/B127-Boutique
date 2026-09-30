@@ -1,374 +1,4020 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#000">
-<title>B127 Boutique</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#080808;color:#fff}
-header{background:#000;padding:18px;text-align:center;border-bottom:1px solid #b88920}
-.logo{font-size:34px;font-weight:bold;color:#d4af37}
-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
-button{background:#d4af37;color:#000;border:0;padding:11px 16px;border-radius:8px;font-weight:bold}
-input,textarea,select{width:100%;padding:12px;margin:6px 0 12px;border-radius:7px;border:1px solid #555;background:#171717;color:#fff}
-main{max-width:1100px;margin:auto;padding:18px}
-.hero{text-align:center;padding:30px 10px}
-.hero h1{color:#d4af37;font-size:38px}
-.search{margin:15px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
-.card{background:#151515;border:1px solid #333;border-radius:12px;padding:18px}
-.icon{font-size:55px;text-align:center}
-.price{color:#d4af37;font-size:22px;font-weight:bold}
-section{margin-top:25px}
-.hidden{display:none}
-.box{background:#111;border:1px solid #333;padding:18px;border-radius:12px;margin-top:15px}
-small{color:#aaa}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="B127 Boutique en ligne - Qualité, Style, Confiance">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>B127 Boutique — Qualité • Style • Confiance</title>
+
+  <style>
+    :root{
+      --black:#080808;
+      --black2:#111111;
+      --black3:#1a1a1a;
+      --gold:#d4af37;
+      --gold2:#f1cf62;
+      --white:#ffffff;
+      --muted:#b9b9b9;
+      --danger:#dc3545;
+      --success:#20c997;
+      --border:#2b2b2b;
+      --shadow:0 12px 35px rgba(0,0,0,.25);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:#f5f5f5;
+      color:#171717;
+      min-height:100vh;
+    }
+
+    button,
+    input,
+    select,
+    textarea{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+    /* HEADER */
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:var(--black);
+      color:var(--white);
+      border-bottom:2px solid var(--gold);
+      box-shadow:0 4px 18px rgba(0,0,0,.3);
+    }
+
+    .topbar{
+      max-width:1250px;
+      margin:auto;
+      padding:12px 18px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+      justify-content:space-between;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:max-content;
+    }
+
+    .brand-logo{
+      width:45px;
+      height:45px;
+      border:2px solid var(--gold);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      background:#000;
+    }
+
+    .brand-text strong{
+      display:block;
+      color:var(--gold2);
+      font-size:20px;
+      letter-spacing:1px;
+    }
+
+    .brand-text span{
+      display:block;
+      color:#ddd;
+      font-size:10px;
+      letter-spacing:1.5px;
+      margin-top:2px;
+    }
+
+    .search-box{
+      flex:1;
+      max-width:500px;
+      display:flex;
+      background:#fff;
+      border-radius:7px;
+      overflow:hidden;
+      border:1px solid #333;
+    }
+
+    .search-box input{
+      flex:1;
+      min-width:0;
+      border:0;
+      outline:0;
+      padding:12px 14px;
+      color:#111;
+    }
+
+    .search-box button{
+      border:0;
+      background:var(--gold);
+      color:#000;
+      padding:0 17px;
+      font-weight:bold;
+    }
+
+    .header-actions{
+      display:flex;
+      gap:7px;
+      align-items:center;
+    }
+
+    .header-btn{
+      border:1px solid #3b3b3b;
+      background:#161616;
+      color:#fff;
+      padding:9px 11px;
+      border-radius:7px;
+      font-size:13px;
+    }
+
+    .header-btn:hover{
+      border-color:var(--gold);
+      color:var(--gold2);
+    }
+
+    .cart-count{
+      display:inline-flex;
+      min-width:20px;
+      height:20px;
+      align-items:center;
+      justify-content:center;
+      background:var(--gold);
+      color:#000;
+      border-radius:50%;
+      font-size:11px;
+      font-weight:bold;
+      margin-left:3px;
+    }
+
+    /* NAVIGATION */
+    .nav{
+      max-width:1250px;
+      margin:auto;
+      padding:0 18px 10px;
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+    }
+
+    .nav button{
+      white-space:nowrap;
+      border:1px solid #333;
+      background:#151515;
+      color:#eee;
+      padding:8px 13px;
+      border-radius:20px;
+      font-size:13px;
+    }
+
+    .nav button:hover,
+    .nav button.active{
+      background:var(--gold);
+      color:#000;
+      border-color:var(--gold);
+    }
+
+    /* MAIN */
+    main{
+      max-width:1250px;
+      margin:auto;
+      padding:22px 18px 50px;
+    }
+
+    .section{
+      margin-bottom:25px;
+    }
+
+    .hero{
+      background:
+        radial-gradient(circle at 85% 20%,rgba(212,175,55,.25),transparent 30%),
+        linear-gradient(135deg,#050505,#1c1c1c);
+      color:white;
+      border-radius:15px;
+      padding:42px 35px;
+      min-height:260px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:30px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid #292929;
+    }
+
+    .hero-content{
+      max-width:680px;
+    }
+
+    .hero small{
+      color:var(--gold2);
+      letter-spacing:3px;
+      text-transform:uppercase;
+    }
+
+    .hero h1{
+      font-size:clamp(30px,5vw,55px);
+      margin:12px 0;
+      line-height:1.05;
+    }
+
+    .hero h1 span{
+      color:var(--gold2);
+    }
+
+    .hero p{
+      color:#ddd;
+      line-height:1.6;
+      max-width:600px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      margin-top:22px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:0;
+      border-radius:8px;
+      padding:11px 16px;
+      font-weight:bold;
+      transition:.2s;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .btn-gold{
+      background:var(--gold);
+      color:#000;
+    }
+
+    .btn-dark{
+      background:#181818;
+      color:#fff;
+      border:1px solid #444;
+    }
+
+    .btn-danger{
+      background:var(--danger);
+      color:#fff;
+    }
+
+    .btn-success{
+      background:var(--success);
+      color:#000;
+    }
+
+    .hero-mark{
+      width:190px;
+      height:190px;
+      border:2px solid var(--gold);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:80px;
+      background:rgba(0,0,0,.35);
+      flex-shrink:0;
+    }
+
+    /* SECTION TITLES */
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:15px;
+    }
+
+    .section-title h2{
+      font-size:22px;
+    }
+
+    .section-title h2 span{
+      color:#a17f13;
+    }
+
+    .section-title small{
+      color:#777;
+    }
+
+    /* CATEGORY CARDS */
+    .categories{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+      gap:10px;
+    }
+
+    .category-card{
+      border:1px solid #ddd;
+      background:#fff;
+      border-radius:10px;
+      padding:18px 10px;
+      text-align:center;
+      cursor:pointer;
+      transition:.2s;
+      box-shadow:0 3px 10px rgba(0,0,0,.05);
+    }
+
+    .category-card:hover{
+      transform:translateY(-2px);
+      border-color:var(--gold);
+      box-shadow:var(--shadow);
+    }
+
+    .category-icon{
+      font-size:28px;
+      margin-bottom:7px;
+    }
+
+    .category-card strong{
+      display:block;
+      font-size:13px;
+    }
+
+    /* PRODUCTS */
+    .products-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:15px;
+    }
+
+    .product-card{
+      background:#fff;
+      border:1px solid #e0e0e0;
+      border-radius:12px;
+      overflow:hidden;
+      position:relative;
+      transition:.2s;
+      box-shadow:0 3px 10px rgba(0,0,0,.05);
+    }
+
+    .product-card:hover{
+      transform:translateY(-3px);
+      box-shadow:var(--shadow);
+      border-color:#d6b84b;
+    }
+
+    .product-image{
+      height:190px;
+      background:#f0f0f0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .product-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .product-icon{
+      font-size:70px;
+    }
+
+    .favorite-btn{
+      position:absolute;
+      right:9px;
+      top:9px;
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      border:0;
+      background:rgba(0,0,0,.65);
+      color:#fff;
+      font-size:18px;
+      z-index:2;
+    }
+
+    .favorite-btn.active{
+      color:#ff3b5c;
+    }
+
+    .product-info{
+      padding:13px;
+    }
+
+    .product-category{
+      color:#8b6e15;
+      font-size:11px;
+      text-transform:uppercase;
+      font-weight:bold;
+    }
+
+    .product-name{
+      font-size:16px;
+      font-weight:bold;
+      margin:5px 0;
+      min-height:38px;
+    }
+
+    .product-description{
+      color:#777;
+      font-size:12px;
+      line-height:1.4;
+      min-height:34px;
+    }
+
+    .product-bottom{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .price{
+      font-size:17px;
+      font-weight:bold;
+      color:#111;
+    }
+
+    .stock{
+      font-size:11px;
+      color:#777;
+      margin-top:4px;
+    }
+
+    .stock.low{
+      color:#c77700;
+      font-weight:bold;
+    }
+
+    .stock.out{
+      color:var(--danger);
+      font-weight:bold;
+    }
+
+    .add-btn{
+      background:var(--black);
+      color:var(--gold2);
+      border:1px solid var(--gold);
+      border-radius:7px;
+      padding:8px 10px;
+      font-size:12px;
+      font-weight:bold;
+    }
+
+    .add-btn:hover{
+      background:var(--gold);
+      color:#000;
+    }
+
+    .add-btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    /* PANELS */
+    .panel{
+      background:#fff;
+      border:1px solid #ddd;
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 3px 12px rgba(0,0,0,.05);
+      margin-bottom:18px;
+    }
+
+    .panel h2,
+    .panel h3{
+      margin-bottom:15px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:5px;
+    }
+
+    .field.full{
+      grid-column:1/-1;
+    }
+
+    .field label{
+      font-size:12px;
+      font-weight:bold;
+      color:#444;
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      border:1px solid #ccc;
+      border-radius:7px;
+      padding:11px;
+      outline:none;
+      background:#fff;
+    }
+
+    .field textarea{
+      min-height:90px;
+      resize:vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus{
+      border-color:var(--gold);
+      box-shadow:0 0 0 2px rgba(212,175,55,.15);
+    }
+
+    .form-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:15px;
+    }
+
+    /* CART */
+    .cart-item{
+      display:grid;
+      grid-template-columns:60px 1fr auto auto;
+      gap:12px;
+      align-items:center;
+      padding:12px 0;
+      border-bottom:1px solid #eee;
+    }
+
+    .cart-item-image{
+      width:60px;
+      height:60px;
+      background:#f1f1f1;
+      border-radius:8px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      font-size:28px;
+    }
+
+    .cart-item-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .cart-item-name{
+      font-weight:bold;
+      font-size:14px;
+    }
+
+    .cart-item-price{
+      color:#777;
+      font-size:12px;
+      margin-top:4px;
+    }
+
+    .qty-controls{
+      display:flex;
+      align-items:center;
+      gap:5px;
+    }
+
+    .qty-controls button{
+      width:28px;
+      height:28px;
+      border:1px solid #ccc;
+      background:#fff;
+      border-radius:5px;
+    }
+
+    .qty-controls span{
+      min-width:25px;
+      text-align:center;
+      font-weight:bold;
+    }
+
+    .cart-total{
+      text-align:right;
+      font-size:20px;
+      font-weight:bold;
+      margin-top:18px;
+    }
+
+    /* ORDERS */
+    .order-card{
+      border:1px solid #ddd;
+      border-radius:10px;
+      padding:15px;
+      margin-bottom:12px;
+      background:#fff;
+    }
+
+    .order-head{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+
+    .status{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:bold;
+      background:#eee;
+    }
+
+    .status.pending{background:#fff0c2;}
+    .status.confirmed{background:#d9ecff;}
+    .status.shipped{background:#e5dcff;}
+    .status.delivered{background:#d9f7e8;}
+    .status.cancelled{background:#ffd9dd;}
+
+    /* ADMIN */
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .stat{
+      background:#111;
+      color:#fff;
+      border-radius:10px;
+      padding:18px;
+      border:1px solid #333;
+    }
+
+    .stat small{
+      color:#bbb;
+      display:block;
+      margin-bottom:7px;
+    }
+
+    .stat strong{
+      color:var(--gold2);
+      font-size:24px;
+    }
+
+    /* TOAST */
+    #toast-container{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:3000;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      max-width:340px;
+    }
+
+    .toast{
+      background:#111;
+      color:#fff;
+      border-left:4px solid var(--gold);
+      padding:13px 15px;
+      border-radius:7px;
+      box-shadow:var(--shadow);
+      font-size:13px;
+      animation:toastIn .2s ease;
+    }
+
+    .toast.error{
+      border-left-color:var(--danger);
+    }
+
+    .toast.success{
+      border-left-color:var(--success);
+    }
+
+    @keyframes toastIn{
+      from{
+        transform:translateY(10px);
+        opacity:0;
+      }
+      to{
+        transform:translateY(0);
+        opacity:1;
+      }
+    }
+
+    /* EMPTY */
+    .empty{
+      text-align:center;
+      padding:35px 15px;
+      color:#777;
+    }
+
+    .empty-icon{
+      font-size:45px;
+      margin-bottom:10px;
+    }
+
+    /* FOOTER */
+    footer{
+      background:#080808;
+      color:#ddd;
+      border-top:2px solid var(--gold);
+      margin-top:20px;
+    }
+
+    .footer-inner{
+      max-width:1250px;
+      margin:auto;
+      padding:30px 18px;
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr;
+      gap:30px;
+    }
+
+    footer h3{
+      color:var(--gold2);
+      margin-bottom:10px;
+    }
+
+    footer p,
+    footer li{
+      color:#aaa;
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    footer ul{
+      list-style:none;
+    }
+
+    .footer-bottom{
+      border-top:1px solid #222;
+      text-align:center;
+      padding:14px;
+      color:#777;
+      font-size:12px;
+    }
+
+    .whatsapp{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:55px;
+      height:55px;
+      border-radius:50%;
+      background:#25d366;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:27px;
+      z-index:2000;
+      box-shadow:0 5px 20px rgba(0,0,0,.3);
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1000px){
+      .products-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:760px){
+      .topbar{
+        flex-wrap:wrap;
+      }
+
+      .search-box{
+        order:3;
+        max-width:none;
+        flex-basis:100%;
+      }
+
+      .header-actions{
+        margin-left:auto;
+      }
+
+      .header-btn{
+        padding:8px;
+        font-size:11px;
+      }
+
+      .hero{
+        padding:28px 20px;
+        min-height:auto;
+      }
+
+      .hero-mark{
+        display:none;
+      }
+
+      .products-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+      }
+
+      .product-image{
+        height:155px;
+      }
+
+      .product-icon{
+        font-size:55px;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .field.full{
+        grid-column:auto;
+      }
+
+      .cart-item{
+        grid-template-columns:50px 1fr;
+      }
+
+      .cart-item > :nth-child(3),
+      .cart-item > :nth-child(4){
+        grid-column:2;
+      }
+
+      .footer-inner{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:430px){
+      main{
+        padding-left:10px;
+        padding-right:10px;
+      }
+
+      .topbar{
+        padding-left:10px;
+        padding-right:10px;
+      }
+
+      .brand-text span{
+        display:none;
+      }
+
+      .brand-text strong{
+        font-size:16px;
+      }
+
+      .brand-logo{
+        width:38px;
+        height:38px;
+        font-size:18px;
+      }
+
+      .products-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .product-info{
+        padding:9px;
+      }
+
+      .product-name{
+        font-size:14px;
+      }
+
+      .price{
+        font-size:14px;
+      }
+
+      .add-btn{
+        padding:7px;
+        font-size:10px;
+      }
+
+      .stats{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">👑 B127</div>
-  <div>BOUTIQUE EN LIGNE</div>
-  <nav>
-    <button onclick="show('home')">🏠 Accueil</button>
-    <button onclick="show('account')">👤 Compte</button>
-    <button onclick="show('seller')">🏪 Vendeur</button>
-    <button onclick="show('cart')">🛒 Panier (<span id="cartCount">0</span>)</button>
+  <div class="topbar">
+
+    <a href="#" class="brand" onclick="showSection('home');return false;">
+      <div class="brand-logo">👑</div>
+      <div class="brand-text">
+        <strong>B127</strong>
+        <span>BOUTIQUE EN LIGNE</span>
+      </div>
+    </a>
+
+    <div class="search-box">
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Rechercher un produit..."
+        autocomplete="off"
+      >
+      <button onclick="performSearch()">🔍</button>
+    </div>
+
+    <div class="header-actions">
+      <button class="header-btn" onclick="showSection('account')">
+        👤 Compte
+      </button>
+
+      <button class="header-btn" onclick="showSection('cart')">
+        🛒 Panier
+        <span id="cartCount" class="cart-count">0</span>
+      </button>
+    </div>
+
+  </div>
+
+  <nav class="nav">
+    <button id="navHome" class="active" onclick="showSection('home')">
+      🏠 Accueil
+    </button>
+
+    <button onclick="showSection('products')">
+      🛍️ Produits
+    </button>
+
+    <button onclick="showSection('favorites')">
+      ❤️ Favoris
+    </button>
+
+    <button onclick="showSection('orders')">
+      📦 Mes commandes
+    </button>
+
+    <button onclick="showSection('seller')">
+      🏪 Vendeur
+    </button>
+
+    <button id="adminNav" class="hidden" onclick="showSection('admin')">
+      ⚙️ Administration
+    </button>
   </nav>
 </header>
 
 <main>
 
-<section id="home">
-  <div class="hero">
-    <h1>B127 Boutique</h1>
-    <p>Vos envies, notre priorité</p>
-    <input class="search" id="search" placeholder="🔎 Rechercher un produit..." oninput="renderProducts()">
-  </div>
+  <!-- ACCUEIL -->
+  <section id="homeSection" class="section">
 
-  <h2>🛍️ Nos produits</h2>
-  <div id="products" class="grid"></div>
-</section>
+    <div class="hero">
+      <div class="hero-content">
+        <small>Bienvenue chez</small>
 
-<section id="account" class="hidden">
-  <h2>👤 Mon compte</h2>
+        <h1>
+          B127 <span>Boutique</span>
+        </h1>
 
-  <div class="box">
-    <h3>Créer un compte</h3>
-    <input id="rname" placeholder="Nom complet">
-    <input id="rphone" placeholder="Téléphone">
-    <input id="remail" type="email" placeholder="E-mail">
-    <input id="rpass" type="password" placeholder="Mot de passe">
-    <button onclick="register()">Créer mon compte</button>
-  </div>
+        <p>
+          Découvrez nos produits avec la promesse
+          <strong>Qualité • Style • Confiance</strong>.
+          Commandez en ligne et faites-vous livrer au Sénégal.
+        </p>
 
-  <div class="box">
-    <h3>Connexion</h3>
-    <input id="lemail" type="email" placeholder="E-mail">
-    <input id="lpass" type="password" placeholder="Mot de passe">
-    <button onclick="login()">Se connecter</button>
-  </div>
+        <div class="hero-actions">
+          <button class="btn btn-gold" onclick="showSection('products')">
+            🛍️ Voir les produits
+          </button>
 
-  <div id="userInfo" class="box"></div>
-</section>
+          <button class="btn btn-dark" onclick="openWhatsApp()">
+            💬 WhatsApp
+          </button>
+        </div>
+      </div>
 
-<section id="cart" class="hidden">
-  <h2>🛒 Mon panier</h2>
-  <div id="cartItems"></div>
+      <div class="hero-mark">
+        👑
+      </div>
+    </div>
 
-  <div class="box">
-    <h3>Passer la commande</h3>
-    <input id="cname" placeholder="Nom complet">
-    <input id="cphone" placeholder="Téléphone / WhatsApp">
-    <textarea id="caddress" placeholder="Adresse de livraison"></textarea>
-    <select id="payment">
-      <option value="Wave">Wave</option>
-      <option value="Orange Money">Orange Money</option>
-      <option value="Paiement à la livraison">Paiement à la livraison</option>
-    </select>
-    <button onclick="order()">📦 Commander</button>
-  </div>
-</section>
+    <div class="section" style="margin-top:25px;">
+      <div class="section-title">
+        <h2>Nos <span>catégories</span></h2>
+      </div>
 
-<section id="seller" class="hidden">
-  <h2>🏪 Espace vendeur</h2>
+      <div id="categoriesGrid" class="categories">
+        <div class="empty">
+          Chargement des catégories...
+        </div>
+      </div>
+    </div>
 
-  <div class="box">
-    <h3>Créer ma boutique</h3>
-    <input id="sname" placeholder="Nom de ma boutique">
-    <input id="sphone" placeholder="Téléphone">
-    <input id="scat" placeholder="Catégorie">
-    <button onclick="createSeller()">Créer ma boutique</button>
-  </div>
+    <div class="section">
+      <div class="section-title">
+        <h2>Produits <span>à découvrir</span></h2>
+        <button class="btn btn-dark" onclick="showSection('products')">
+          Tout voir
+        </button>
+      </div>
 
-  <div class="box">
-    <h3>Ajouter un produit</h3>
-    <input id="pname" placeholder="Nom du produit">
-    <input id="pprice" type="number" placeholder="Prix en FCFA">
-    <input id="pcat" placeholder="Catégorie">
-    <input id="picon" placeholder="Emoji, ex: 📱">
-    <button onclick="addProduct()">Ajouter le produit</button>
-  </div>
+      <div id="homeProducts" class="products-grid">
+        <div class="empty">
+          Chargement des produits...
+        </div>
+      </div>
+    </div>
 
-  <div id="sellerInfo" class="box"></div>
-</section>
+  </section>
+
+  <!-- PRODUITS -->
+  <section id="productsSection" class="section hidden">
+
+    <div class="section-title">
+      <div>
+        <h2>🛍️ Tous les <span>produits</span></h2>
+        <small id="productsCount"></small>
+      </div>
+
+      <select
+        id="categoryFilter"
+        onchange="loadProducts()"
+        style="padding:9px;border:1px solid #ccc;border-radius:7px;"
+      >
+        <option value="">Toutes les catégories</option>
+      </select>
+    </div>
+
+    <div id="productsGrid" class="products-grid">
+      <div class="empty">
+        Chargement...
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FAVORIS -->
+  <section id="favoritesSection" class="section hidden">
+
+    <div class="section-title">
+      <h2>❤️ Mes <span>favoris</span></h2>
+    </div>
+
+    <div id="favoritesGrid" class="products-grid">
+      <div class="empty">
+        <div class="empty-icon">❤️</div>
+        Connectez-vous pour voir vos favoris.
+      </div>
+    </div>
+
+  </section>
+
+  <!-- COMPTE -->
+  <section id="accountSection" class="section hidden">
+
+    <div id="accountLoggedOut">
+
+      <div class="panel">
+        <h2>👤 Créer un compte</h2>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>Nom complet</label>
+            <input id="registerName" type="text" placeholder="Votre nom">
+          </div>
+
+          <div class="field">
+            <label>Téléphone</label>
+            <input id="registerPhone" type="tel" placeholder="+221 ...">
+          </div>
+
+          <div class="field">
+            <label>Email</label>
+            <input id="registerEmail" type="email" placeholder="exemple@email.com">
+          </div>
+
+          <div class="field">
+            <label>Mot de passe</label>
+            <input id="registerPassword" type="password" placeholder="Minimum 6 caractères">
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-gold" onclick="registerUser()">
+            Créer mon compte
+          </button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>🔐 Se connecter</h2>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>Email</label>
+            <input id="loginEmail" type="email" placeholder="Votre email">
+          </div>
+
+          <div class="field">
+            <label>Mot de passe</label>
+            <input id="loginPassword" type="password" placeholder="Votre mot de passe">
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-dark" onclick="loginUser()">
+            Se connecter
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="accountLoggedIn" class="hidden">
+
+      <div class="panel">
+        <h2>👋 Bienvenue <span id="userNameDisplay"></span></h2>
+
+        <p id="userInfoDisplay" style="color:#666;line-height:1.7;"></p>
+
+        <div class="form-actions">
+          <button class="btn btn-gold" onclick="showSection('orders')">
+            📦 Mes commandes
+          </button>
+
+          <button class="btn btn-dark" onclick="showSection('favorites')">
+            ❤️ Mes favoris
+          </button>
+
+          <button class="btn btn-danger" onclick="logoutUser()">
+            Déconnexion
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- PANIER -->
+  <section id="cartSection" class="section hidden">
+
+    <div class="section-title">
+      <h2>🛒 Mon <span>panier</span></h2>
+    </div>
+
+    <div class="panel">
+      <div id="cartItems"></div>
+
+      <div id="cartSummary" class="hidden">
+        <div class="cart-total">
+          Total : <span id="cartTotal">0 FCFA</span>
+        </div>
+
+        <div class="form-actions" style="justify-content:flex-end;">
+          <button class="btn btn-dark" onclick="clearCart()">
+            Vider le panier
+          </button>
+
+          <button class="btn btn-gold" onclick="showCheckout()">
+            Passer la commande
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHECKOUT -->
+    <div id="checkoutPanel" class="panel hidden">
+
+      <h2>📦 Livraison et paiement</h2>
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Nom complet *</label>
+          <input id="checkoutName" type="text" placeholder="Nom du client">
+        </div>
+
+        <div class="field">
+          <label>Téléphone *</label>
+          <input id="checkoutPhone" type="tel" placeholder="+221 78 ...">
+        </div>
+
+        <div class="field">
+          <label>Ville *</label>
+          <input id="checkoutCity" type="text" placeholder="Dakar, Mbour, Thiès...">
+        </div>
+
+        <div class="field">
+          <label>Quartier *</label>
+          <input id="checkoutNeighborhood" type="text" placeholder="Votre quartier">
+        </div>
+
+        <div class="field full">
+          <label>Adresse / indication de livraison *</label>
+          <textarea
+            id="checkoutAddress"
+            placeholder="Adresse complète, point de repère..."
+          ></textarea>
+        </div>
+
+        <div class="field full">
+          <label>Mode de paiement *</label>
+          <select id="checkoutPayment">
+            <option value="Wave">Wave</option>
+            <option value="Orange Money">Orange Money</option>
+            <option value="COD">Paiement à la livraison</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-dark" onclick="hideCheckout()">
+          Retour
+        </button>
+
+        <button class="btn btn-gold" onclick="placeOrder()">
+          ✅ Confirmer la commande
+        </button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- COMMANDES -->
+  <section id="ordersSection" class="section hidden">
+
+    <div class="section-title">
+      <h2>📦 Mes <span>commandes</span></h2>
+    </div>
+
+    <div id="ordersList">
+      <div class="empty">
+        Connectez-vous pour consulter vos commandes.
+      </div>
+    </div>
+
+  </section>
+
+  <!-- VENDEUR -->
+  <section id="sellerSection" class="section hidden">
+
+    <div id="sellerNotConnected" class="panel">
+      <h2>🏪 Espace vendeur</h2>
+      <p style="color:#666;margin-bottom:15px;">
+        Connectez-vous pour créer votre espace vendeur.
+      </p>
+
+      <button class="btn btn-gold" onclick="showSection('account')">
+        Se connecter
+      </button>
+    </div>
+
+    <div id="sellerArea" class="hidden">
+
+      <div class="panel">
+        <h2>🏪 Ma boutique</h2>
+        <div id="sellerInfo"></div>
+      </div>
+
+      <div class="panel">
+        <h2>➕ Ajouter un produit</h2>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>Nom du produit *</label>
+            <input id="productName" type="text" placeholder="Ex: Sac à main">
+          </div>
+
+          <div class="field">
+            <label>Prix en FCFA *</label>
+            <input id="productPrice" type="number" min="0" placeholder="15000">
+          </div>
+
+          <div class="field">
+            <label>Catégorie *</label>
+            <input id="productCategory" type="text" placeholder="Mode">
+          </div>
+
+          <div class="field">
+            <label>Stock *</label>
+            <input id="productStock" type="number" min="0" value="1">
+          </div>
+
+          <div class="field full">
+            <label>Description</label>
+            <textarea
+              id="productDescription"
+              placeholder="Description du produit..."
+            ></textarea>
+          </div>
+
+          <div class="field">
+            <label>Image du produit (URL)</label>
+            <input
+              id="productImage"
+              type="url"
+              placeholder="https://..."
+            >
+          </div>
+
+          <div class="field">
+            <label>Icône / emoji si pas d'image</label>
+            <input
+              id="productIcon"
+              type="text"
+              placeholder="🛍️"
+              maxlength="10"
+            >
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-gold" onclick="createProduct()">
+            Ajouter le produit
+          </button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>📋 Mes produits</h2>
+        <div id="sellerProducts"></div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ADMIN -->
+  <section id="adminSection" class="section hidden">
+
+    <div class="section-title">
+      <h2>⚙️ <span>Administration</span></h2>
+    </div>
+
+    <div id="adminContent">
+      Chargement...
+    </div>
+
+  </section>
 
 </main>
 
+<footer>
+  <div class="footer-inner">
+
+    <div>
+      <h3>👑 B127 Boutique</h3>
+      <p>
+        Qualité • Style • Confiance
+      </p>
+      <p>
+        Votre boutique en ligne au Sénégal.
+      </p>
+    </div>
+
+    <div>
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="#" onclick="showSection('home');return false;">Accueil</a></li>
+        <li><a href="#" onclick="showSection('products');return false;">Produits</a></li>
+        <li><a href="#" onclick="showSection('favorites');return false;">Favoris</a></li>
+        <li><a href="#" onclick="showSection('orders');return false;">Commandes</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Contact</h3>
+      <p>📱 +221 78 323 36 92</p>
+      <p>💬 WhatsApp disponible</p>
+      <button class="btn btn-gold" onclick="openWhatsApp()" style="margin-top:8px;">
+        Nous contacter
+      </button>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © <span id="currentYear"></span> B127 Boutique — Tous droits réservés.
+  </div>
+</footer>
+
+<a
+  class="whatsapp"
+  href="https://wa.me/221783233692"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="WhatsApp B127"
+>💬</a>
+
+<div id="toast-container"></div>
+
 <script>
-const API='';
-let token=localStorage.getItem('b127_token')||'';
-let cart=JSON.parse(localStorage.getItem('b127_cart')||'[]');
-let products=[];
+  const API = '';
 
-function headers(){
-  const h={'Content-Type':'application/json'};
-  if(token) h.Authorization='Bearer '+token;
-  return h;
-}
+  let token = localStorage.getItem('b127_token') || '';
+  let currentUser = JSON.parse(localStorage.getItem('b127_user') || 'null');
+  let cart = JSON.parse(localStorage.getItem('b127_cart') || '[]');
 
-async function api(path,options={}){
-  const r=await fetch(API+path,{
-    ...options,
-    headers:{...headers(),...(options.headers||{})}
+  let products = [];
+  let categories = [];
+  let favoriteIds = [];
+
+  const $ = (id) => document.getElementById(id);
+
+  function escapeHtml(value){
+    return String(value ?? '')
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#039;');
+  }
+
+  function money(value){
+    return Number(value || 0).toLocaleString('fr-FR') + ' FCFA';
+  }
+
+  function showToast(message, type=''){
+    const container = $('toast-container');
+    const toast = document.createElement('div');
+
+    toast.className = 'toast ' + type;
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.remove();
+    }, 3500);
+  }
+
+  function saveLocal(){
+    localStorage.setItem('b127_token', token || '');
+    localStorage.setItem('b127_user', JSON.stringify(currentUser || null));
+    localStorage.setItem('b127_cart', JSON.stringify(cart));
+  }
+
+  function headers(){
+    const h = {
+      'Content-Type':'application/json'
+    };
+
+    if(token){
+      h.Authorization = 'Bearer ' + token;
+    }
+
+    return h;
+  }
+
+  async function api(url, options={}){
+    const response = await fetch(API + url, {
+      ...options,
+      headers:{
+        ...headers(),
+        ...(options.headers || {})
+      }
+    });
+
+    let data = {};
+
+    try{
+      data = await response.json();
+    }catch(e){
+      data = {};
+    }
+
+    if(!response.ok){
+      throw new Error(data.error || data.message || 'Une erreur est survenue.');
+    }
+
+    return data;
+  }
+
+  function showSection(name){
+
+    const sections = [
+      'home',
+      'products',
+      'favorites',
+      'account',
+      'cart',
+      'orders',
+      'seller',
+      'admin'
+    ];
+
+    sections.forEach(section => {
+      const el = $(section + 'Section');
+      if(el){
+        el.classList.toggle('hidden', section !== name);
+      }
+    });
+
+    document.querySelectorAll('.nav button').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    if(name === 'home' && $('navHome')){
+      $('navHome').classList.add('active');
+    }
+
+    window.scrollTo({
+      top:0,
+      behavior:'smooth'
+    });
+
+    if(name === 'products'){
+      loadProducts();
+    }
+
+    if(name === 'favorites'){
+      loadFavorites();
+    }
+
+    if(name === 'orders'){
+      loadOrders();
+    }
+
+    if(name === 'seller'){
+      loadSeller();
+    }
+
+    if(name === 'admin'){
+      loadAdmin();
+    }
+
+    updateAccountUI();
+  }
+
+  function performSearch(){
+    const value = $('searchInput').value.trim();
+
+    showSection('products');
+
+    renderProducts(value);
+  }
+
+  $('searchInput').addEventListener('keydown', function(event){
+    if(event.key === 'Enter'){
+      performSearch();
+    }
   });
-  const data=await r.json().catch(()=>({}));
-  if(!r.ok) throw new Error(data.error||'Erreur');
-  return data;
-}
 
-function show(id){
-  ['home','account','cart','seller'].forEach(x=>{
-    document.getElementById(x).classList.add('hidden');
-  });
-  document.getElementById(id).classList.remove('hidden');
-
-  if(id==='cart') renderCart();
-  if(id==='seller') loadSeller();
-}
-
-async function loadProducts(){
-  try{
-    const data=await api('/api/products');
-    products=Array.isArray(data) ? data : (data.products||[]);
-    renderProducts();
-  }catch(e){
-    document.getElementById('products').innerHTML='<p>Impossible de charger les produits.</p>';
-  }
-}
-
-function renderProducts(){
-  const q=(document.getElementById('search')?.value||'').toLowerCase();
-  const list=products.filter(p=>
-    p.name.toLowerCase().includes(q) ||
-    p.category.toLowerCase().includes(q)
-  );
-
-  document.getElementById('products').innerHTML=list.map(p=>`
-    <div class="card">
-      <div class="icon">${p.icon||'🛍️'}</div>
-      <h3>${p.name}</h3>
-      <small>${p.category}</small>
-      <p class="price">${Number(p.price).toLocaleString('fr-FR')} FCFA</p>
-      <p>Stock : ${p.stock}</p>
-      <button onclick="addCart(${p.id})">🛒 Ajouter</button>
-    </div>
-  `).join('') || '<p>Aucun produit trouvé.</p>';
-}
-
-function addCart(id){
-  const p=products.find(x=>x.id===id);
-  if(!p)return;
-  const old=cart.find(x=>x.id===id);
-  if(old) old.quantity++;
-  else cart.push({...p,quantity:1});
-  saveCart();
-  alert('Produit ajouté au panier ✅');
-}
-
-function saveCart(){
-  localStorage.setItem('b127_cart',JSON.stringify(cart));
-  document.getElementById('cartCount').textContent=
-    cart.reduce((s,x)=>s+x.quantity,0);
-}
-
-function renderCart(){
-  const box=document.getElementById('cartItems');
-  if(!cart.length){
-    box.innerHTML='<p>Votre panier est vide.</p>';
-    return;
+  function getProductImage(product){
+    return product.image || product.icon || '🛍️';
   }
 
-  box.innerHTML=cart.map((p,i)=>`
-    <div class="card">
-      ${p.icon} <b>${p.name}</b><br>
-      ${Number(p.price).toLocaleString('fr-FR')} FCFA × ${p.quantity}
-      <button onclick="removeCart(${i})">❌</button>
-    </div>
-  `).join('');
+  function productVisual(product){
+    const visual = getProductImage(product);
 
-  const total=cart.reduce((s,x)=>s+x.price*x.quantity,0);
-  box.innerHTML+=`<div class="box"><h3>Total : ${total.toLocaleString('fr-FR')} FCFA</h3></div>`;
-}
+    if(
+      typeof visual === 'string' &&
+      (
+        visual.startsWith('http://') ||
+        visual.startsWith('https://') ||
+        visual.startsWith('data:image/')
+      )
+    ){
+      return '<img src="' +
+        escapeHtml(visual) +
+        '" alt="' +
+        escapeHtml(product.name) +
+        '" loading="lazy">';
+    }
 
-function removeCart(i){
-  cart.splice(i,1);
-  saveCart();
-  renderCart();
-}
-
-async function register(){
-  try{
-    const d=await api('/api/auth/register',{
-      method:'POST',
-      body:JSON.stringify({
-        name:rname.value,
-        phone:rphone.value,
-        email:remail.value,
-        password:rpass.value
-      })
-    });
-    token=d.token;
-    localStorage.setItem('b127_token',token);
-    localStorage.setItem('b127_user',JSON.stringify(d.user));
-    alert('Compte créé avec succès ✅');
-    updateUser();
-  }catch(e){alert(e.message)}
-}
-
-async function login(){
-  try{
-    const d=await api('/api/auth/login',{
-      method:'POST',
-      body:JSON.stringify({
-        email:lemail.value,
-        password:lpass.value
-      })
-    });
-    token=d.token;
-    localStorage.setItem('b127_token',token);
-    localStorage.setItem('b127_user',JSON.stringify(d.user));
-    alert('Connexion réussie ✅');
-    updateUser();
-  }catch(e){alert(e.message)}
-}
-
-function updateUser(){
-  const u=JSON.parse(localStorage.getItem('b127_user')||'null');
-  userInfo.innerHTML=u
-    ? `<h3>Bonjour ${u.name} 👋</h3><p>${u.email}</p><p>${u.phone}</p>
-       <button onclick="logout()">Déconnexion</button>`
-    : '<p>Vous n’êtes pas connecté.</p>';
-}
-
-function logout(){
-  token='';
-  localStorage.removeItem('b127_token');
-  localStorage.removeItem('b127_user');
-  updateUser();
-  alert('Déconnexion effectuée.');
-}
-
-async function createSeller(){
-  try{
-    const d=await api('/api/seller',{
-      method:'POST',
-      body:JSON.stringify({
-        name:sname.value,
-        phone:sphone.value,
-        category:scat.value
-      })
-    });
-    alert('Boutique créée ✅');
-    loadSeller();
-  }catch(e){alert(e.message)}
-}
-
-async function addProduct(){
-  try{
-    await api('/api/products',{
-      method:'POST',
-      body:JSON.stringify({
-        name:pname.value,
-        price:Number(pprice.value),
-        category:pcat.value,
-        icon:picon.value||'🛍️'
-      })
-    });
-    alert('Produit ajouté ✅');
-    pname.value='';
-    pprice.value='';
-    pcat.value='';
-    picon.value='';
-    loadProducts();
-  }catch(e){alert(e.message)}
-}
-
-async function loadSeller(){
-  if(!token){
-    sellerInfo.innerHTML='<p>Connecte-toi d’abord pour gérer ta boutique.</p>';
-    return;
+    return '<div class="product-icon">' +
+      escapeHtml(visual) +
+      '</div>';
   }
-  try{
-    const d=await api('/api/seller');
-    if(!d.seller){
-      sellerInfo.innerHTML='<p>Tu n’as pas encore créé de boutique.</p>';
+
+  function updateCartCount(){
+    const count = cart.reduce((sum,item) => {
+      return sum + Number(item.quantity || 0);
+    },0);
+
+    $('cartCount').textContent = count;
+  }
+
+  function saveCart(){
+    localStorage.setItem('b127_cart', JSON.stringify(cart));
+    updateCartCount();
+  }
+
+  function clearCart(){
+    cart = [];
+    saveCart();
+    renderCart();
+    showToast('Panier vidé.');
+  }
+
+  function addToCart(productId){
+
+    const product = products.find(p => Number(p.id) === Number(productId));
+
+    if(!product){
+      showToast('Produit introuvable.', 'error');
       return;
     }
-    sellerInfo.innerHTML=
-      `<h3>🏪 ${d.seller.name}</h3>
-       <p>${d.seller.category}</p>
-       <p>${d.products.length} produit(s)</p>`;
-  }catch(e){sellerInfo.innerHTML='<p>'+e.message+'</p>'}
-}
 
-async function order(){
-  if(!cart.length){
-    alert('Ton panier est vide.');
-    return;
-  }
+    const stock = Number(product.stock || 0);
 
-  try{
-    const d=await api('/api/orders',{
-      method:'POST',
-      body:JSON.stringify({
-        customer_name:cname.value,
-        phone:cphone.value,
-        address:caddress.value,
-        payment:payment.value,
-        items:cart
-      })
-    });
+    if(stock <= 0){
+      showToast('Produit en rupture de stock.', 'error');
+      return;
+    }
 
-    const message=
-      `Bonjour B127 Boutique 👋%0A%0A`+
-      `Nouvelle commande : ${d.order.order_ref}%0A`+
-      `Client : ${cname.value}%0A`+
-      `Téléphone : ${cphone.value}%0A`+
-      `Adresse : ${caddress.value}%0A`+
-      `Paiement : ${payment.value}%0A`+
-      `Total : ${Number(d.order.total).toLocaleString('fr-FR')} FCFA`;
+    const existing = cart.find(item => Number(item.id) === Number(productId));
 
-    cart=[];
+    if(existing){
+      if(Number(existing.quantity) >= stock){
+        showToast('Stock maximum atteint.', 'error');
+        return;
+      }
+
+      existing.quantity += 1;
+    }else{
+      cart.push({
+        id:Number(product.id),
+        quantity:1
+      });
+    }
+
     saveCart();
     renderCart();
 
-    window.open(
-      'https://wa.me/221783233692?text='+message,
-      '_blank'
+    showToast('Produit ajouté au panier.', 'success');
+  }
+
+  function cartQuantity(productId){
+    const item = cart.find(x => Number(x.id) === Number(productId));
+    return item ? Number(item.quantity || 0) : 0;
+  }
+
+  function changeCartQuantity(productId, delta){
+
+    const product = products.find(p => Number(p.id) === Number(productId));
+    const item = cart.find(x => Number(x.id) === Number(productId));
+
+    if(!item){
+      return;
+    }
+
+    const stock = Number(product?.stock || 0);
+    const next = Number(item.quantity || 0) + delta;
+
+    if(next <= 0){
+      cart = cart.filter(x => Number(x.id) !== Number(productId));
+    }else if(next > stock){
+      showToast('Stock maximum atteint.', 'error');
+      return;
+    }else{
+      item.quantity = next;
+    }
+
+    saveCart();
+    renderCart();
+  }
+
+  function removeFromCart(productId){
+    cart = cart.filter(x => Number(x.id) !== Number(productId));
+    saveCart();
+    renderCart();
+  }
+</script>
+<script>
+  async function loadProducts(){
+    try{
+      const category = $('categoryFilter')?.value || '';
+
+      const url = category
+        ? '/api/products?category=' + encodeURIComponent(category)
+        : '/api/products';
+
+      const data = await api(url);
+
+      products = Array.isArray(data)
+        ? data
+        : (data.products || []);
+
+      renderProducts();
+      renderHomeProducts();
+      populateCategoryFilter();
+
+    }catch(error){
+      console.error(error);
+
+      products = [];
+
+      const grids = [
+        $('productsGrid'),
+        $('homeProducts')
+      ];
+
+      grids.forEach(grid => {
+        if(grid){
+          grid.innerHTML = `
+            <div class="empty">
+              <div class="empty-icon">⚠️</div>
+              Impossible de charger les produits.
+            </div>
+          `;
+        }
+      });
+    }
+  }
+
+  async function loadCategories(){
+    try{
+      const data = await api('/api/categories');
+
+      categories = Array.isArray(data)
+        ? data
+        : (data.categories || []);
+
+      renderCategories();
+      populateCategoryFilter();
+
+    }catch(error){
+      console.error(error);
+
+      categories = [];
+
+      renderCategories();
+    }
+  }
+
+  function renderCategories(){
+
+    const grid = $('categoriesGrid');
+
+    if(!grid){
+      return;
+    }
+
+    const categoryList = categories.length
+      ? categories
+      : [...new Set(
+          products
+            .map(p => p.category)
+            .filter(Boolean)
+        )];
+
+    if(!categoryList.length){
+      grid.innerHTML = `
+        <div class="empty">
+          Aucune catégorie disponible.
+        </div>
+      `;
+      return;
+    }
+
+    const icons = [
+      '🛍️',
+      '👕',
+      '👗',
+      '👟',
+      '📱',
+      '💻',
+      '🏠',
+      '💄',
+      '🎒',
+      '⌚',
+      '🎁',
+      '✨'
+    ];
+
+    grid.innerHTML = categoryList.map((category,index) => {
+
+      const value =
+        typeof category === 'string'
+          ? category
+          : (category.name || category.category || '');
+
+      return `
+        <div
+          class="category-card"
+          onclick="selectCategory('${escapeHtml(value).replace(/'/g,"\\'")}')"
+        >
+          <div class="category-icon">
+            ${icons[index % icons.length]}
+          </div>
+
+          <strong>${escapeHtml(value)}</strong>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function populateCategoryFilter(){
+
+    const select = $('categoryFilter');
+
+    if(!select){
+      return;
+    }
+
+    const current = select.value;
+
+    const values = categories
+      .map(category =>
+        typeof category === 'string'
+          ? category
+          : (category.name || category.category || '')
+      )
+      .filter(Boolean);
+
+    if(!values.length){
+      values.push(
+        ...products
+          .map(p => p.category)
+          .filter(Boolean)
+      );
+    }
+
+    const unique = [...new Set(values)];
+
+    select.innerHTML =
+      '<option value="">Toutes les catégories</option>' +
+      unique.map(category => `
+        <option value="${escapeHtml(category)}">
+          ${escapeHtml(category)}
+        </option>
+      `).join('');
+
+    if(unique.includes(current)){
+      select.value = current;
+    }
+  }
+
+  function selectCategory(category){
+
+    const select = $('categoryFilter');
+
+    if(select){
+      select.value = category;
+    }
+
+    showSection('products');
+
+    loadProducts();
+  }
+
+  function productMatchesSearch(product, search){
+
+    if(!search){
+      return true;
+    }
+
+    const text = [
+      product.name,
+      product.category,
+      product.description,
+      product.seller_name
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase();
+
+    return text.includes(search.toLowerCase());
+  }
+
+  function renderProducts(search=''){
+
+    const grid = $('productsGrid');
+
+    if(!grid){
+      return;
+    }
+
+    const filtered = products.filter(product =>
+      productMatchesSearch(product, search)
     );
 
-    alert('Commande enregistrée ✅');
-  }catch(e){alert(e.message)}
-}
+    $('productsCount').textContent =
+      filtered.length + ' produit' +
+      (filtered.length > 1 ? 's' : '');
 
-saveCart();
-updateUser();
-loadProducts();
+    if(!filtered.length){
+
+      grid.innerHTML = `
+        <div class="empty" style="grid-column:1/-1;">
+          <div class="empty-icon">🔎</div>
+          Aucun produit trouvé.
+        </div>
+      `;
+
+      return;
+    }
+
+    grid.innerHTML = filtered
+      .map(productCard)
+      .join('');
+  }
+
+  function renderHomeProducts(){
+
+    const grid = $('homeProducts');
+
+    if(!grid){
+      return;
+    }
+
+    const list = products.slice(0,8);
+
+    if(!list.length){
+
+      grid.innerHTML = `
+        <div class="empty" style="grid-column:1/-1;">
+          <div class="empty-icon">🛍️</div>
+          Aucun produit disponible pour le moment.
+        </div>
+      `;
+
+      return;
+    }
+
+    grid.innerHTML = list
+      .map(productCard)
+      .join('');
+  }
+
+  function isFavorite(productId){
+    return favoriteIds.some(
+      id => Number(id) === Number(productId)
+    );
+  }
+
+  function productCard(product){
+
+    const stock = Number(product.stock || 0);
+
+    const favorite = isFavorite(product.id);
+
+    let stockText = 'En stock';
+    let stockClass = '';
+
+    if(stock <= 0){
+      stockText = 'Rupture de stock';
+      stockClass = 'out';
+    }else if(stock <= 5){
+      stockText = 'Plus que ' + stock;
+      stockClass = 'low';
+    }else{
+      stockText = stock + ' disponibles';
+    }
+
+    return `
+      <article class="product-card">
+
+        <div class="product-image">
+
+          ${productVisual(product)}
+
+          <button
+            class="favorite-btn ${favorite ? 'active' : ''}"
+            onclick="toggleFavorite(${Number(product.id)});event.stopPropagation();"
+            title="Ajouter aux favoris"
+          >
+            ${favorite ? '♥' : '♡'}
+          </button>
+
+        </div>
+
+        <div class="product-info">
+
+          <div class="product-category">
+            ${escapeHtml(product.category || 'Autre')}
+          </div>
+
+          <div class="product-name">
+            ${escapeHtml(product.name || 'Produit')}
+          </div>
+
+          <div class="product-description">
+            ${escapeHtml(
+              product.description ||
+              'Produit disponible chez B127 Boutique.'
+            )}
+          </div>
+
+          <div class="stock ${stockClass}">
+            ${stockText}
+          </div>
+
+          <div class="product-bottom">
+
+            <div class="price">
+              ${money(product.price)}
+            </div>
+
+            <button
+              class="add-btn"
+              onclick="addToCart(${Number(product.id)})"
+              ${stock <= 0 ? 'disabled' : ''}
+            >
+              🛒 Ajouter
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+    `;
+  }
+
+  async function toggleFavorite(productId){
+
+    if(!token){
+      showToast(
+        'Connectez-vous pour utiliser les favoris.',
+        'error'
+      );
+
+      showSection('account');
+      return;
+    }
+
+    try{
+
+      const data = await api(
+        '/api/favorites/' + Number(productId),
+        {
+          method:'POST'
+        }
+      );
+
+      if(data.favorite){
+
+        if(!isFavorite(productId)){
+          favoriteIds.push(Number(productId));
+        }
+
+        showToast(
+          'Produit ajouté aux favoris.',
+          'success'
+        );
+
+      }else{
+
+        favoriteIds = favoriteIds.filter(
+          id => Number(id) !== Number(productId)
+        );
+
+        showToast(
+          'Produit retiré des favoris.'
+        );
+      }
+
+      renderProducts(
+        $('searchInput')?.value.trim() || ''
+      );
+
+      renderHomeProducts();
+
+      if(
+        !$('favoritesSection').classList.contains('hidden')
+      ){
+        loadFavorites();
+      }
+
+    }catch(error){
+
+      showToast(
+        error.message || 'Erreur avec les favoris.',
+        'error'
+      );
+    }
+  }
+
+  async function loadFavorites(){
+
+    const grid = $('favoritesGrid');
+
+    if(!grid){
+      return;
+    }
+
+    if(!token){
+
+      grid.innerHTML = `
+        <div class="empty" style="grid-column:1/-1;">
+          <div class="empty-icon">🔐</div>
+          <p>Connectez-vous pour gérer vos favoris.</p>
+          <button
+            class="btn btn-gold"
+            onclick="showSection('account')"
+            style="margin-top:12px;"
+          >
+            Se connecter
+          </button>
+        </div>
+      `;
+
+      return;
+    }
+
+    try{
+
+      const data = await api('/api/favorites');
+
+      const list = Array.isArray(data)
+        ? data
+        : (data.favorites || []);
+
+      favoriteIds = list
+        .map(item =>
+          Number(
+            item.product_id ||
+            item.id ||
+            item.productId
+          )
+        )
+        .filter(Boolean);
+
+      const favoriteProducts = list
+        .map(item => {
+
+          if(item.product){
+            return item.product;
+          }
+
+          return products.find(
+            p => Number(p.id) === Number(
+              item.product_id || item.id
+            )
+          );
+        })
+        .filter(Boolean);
+
+      if(!favoriteProducts.length){
+
+        grid.innerHTML = `
+          <div class="empty" style="grid-column:1/-1;">
+            <div class="empty-icon">❤️</div>
+            Vous n'avez encore aucun favori.
+          </div>
+        `;
+
+        return;
+      }
+
+      grid.innerHTML = favoriteProducts
+        .map(productCard)
+        .join('');
+
+    }catch(error){
+
+      console.error(error);
+
+      grid.innerHTML = `
+        <div class="empty" style="grid-column:1/-1;">
+          <div class="empty-icon">⚠️</div>
+          Impossible de charger vos favoris.
+        </div>
+      `;
+    }
+  }
+
+  function renderCart(){
+
+    const container = $('cartItems');
+    const summary = $('cartSummary');
+    const totalEl = $('cartTotal');
+
+    if(!container){
+      return;
+    }
+
+    if(!cart.length){
+
+      container.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">🛒</div>
+          <h3>Votre panier est vide</h3>
+          <p style="margin-top:6px;">
+            Ajoutez des produits pour commencer vos achats.
+          </p>
+
+          <button
+            class="btn btn-gold"
+            onclick="showSection('products')"
+            style="margin-top:15px;"
+          >
+            Voir les produits
+          </button>
+        </div>
+      `;
+
+      summary.classList.add('hidden');
+      hideCheckout();
+
+      return;
+    }
+
+    let total = 0;
+
+    container.innerHTML = cart.map(item => {
+
+      const product = products.find(
+        p => Number(p.id) === Number(item.id)
+      );
+
+      if(!product){
+        return '';
+      }
+
+      const quantity = Number(item.quantity || 1);
+      const price = Number(product.price || 0);
+      const subtotal = price * quantity;
+
+      total += subtotal;
+
+      return `
+        <div class="cart-item">
+
+          <div class="cart-item-image">
+            ${productVisual(product)}
+          </div>
+
+          <div>
+            <div class="cart-item-name">
+              ${escapeHtml(product.name)}
+            </div>
+
+            <div class="cart-item-price">
+              ${money(price)} l'unité
+            </div>
+          </div>
+
+          <div class="qty-controls">
+
+            <button
+              onclick="changeCartQuantity(${Number(product.id)},-1)"
+            >
+              −
+            </button>
+
+            <span>${quantity}</span>
+
+            <button
+              onclick="changeCartQuantity(${Number(product.id)},1)"
+            >
+              +
+            </button>
+
+          </div>
+
+          <div style="text-align:right;">
+
+            <strong>
+              ${money(subtotal)}
+            </strong>
+
+            <br>
+
+            <button
+              onclick="removeFromCart(${Number(product.id)})"
+              style="
+                border:0;
+                background:none;
+                color:#dc3545;
+                font-size:11px;
+                margin-top:5px;
+              "
+            >
+              Supprimer
+            </button>
+
+          </div>
+
+        </div>
+      `;
+
+    }).join('');
+
+    summary.classList.remove('hidden');
+
+    totalEl.textContent = money(total);
+  }
+
+  function showCheckout(){
+
+    if(!cart.length){
+      showToast(
+        'Votre panier est vide.',
+        'error'
+      );
+      return;
+    }
+
+    if(!token){
+      showToast(
+        'Connectez-vous avant de passer commande.',
+        'error'
+      );
+
+      showSection('account');
+      return;
+    }
+
+    $('checkoutPanel').classList.remove('hidden');
+
+    if(currentUser){
+
+      if(!$('checkoutName').value){
+        $('checkoutName').value =
+          currentUser.name || '';
+      }
+
+      if(!$('checkoutPhone').value){
+        $('checkoutPhone').value =
+          currentUser.phone || '';
+      }
+    }
+
+    setTimeout(() => {
+      $('checkoutPanel').scrollIntoView({
+        behavior:'smooth',
+        block:'start'
+      });
+    },100);
+  }
+
+  function hideCheckout(){
+
+    if($('checkoutPanel')){
+      $('checkoutPanel').classList.add('hidden');
+    }
+  }
+
+  function validateCheckout(){
+
+    const fields = [
+      $('checkoutName'),
+      $('checkoutPhone'),
+      $('checkoutCity'),
+      $('checkoutNeighborhood'),
+      $('checkoutAddress')
+    ];
+
+    for(const field of fields){
+
+      if(!field || !field.value.trim()){
+
+        showToast(
+          'Veuillez remplir tous les champs de livraison.',
+          'error'
+        );
+
+        field?.focus();
+
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  async function placeOrder(){
+
+    if(!token){
+
+      showToast(
+        'Connectez-vous pour commander.',
+        'error'
+      );
+
+      showSection('account');
+      return;
+    }
+
+    if(!cart.length){
+
+      showToast(
+        'Votre panier est vide.',
+        'error'
+      );
+
+      return;
+    }
+
+    if(!validateCheckout()){
+      return;
+    }
+
+    const items = cart.map(item => ({
+      id:Number(item.id),
+      quantity:Number(item.quantity || 1)
+    }));
+
+    const payload = {
+
+      customer_name:
+        $('checkoutName').value.trim(),
+
+      phone:
+        $('checkoutPhone').value.trim(),
+
+      city:
+        $('checkoutCity').value.trim(),
+
+      neighborhood:
+        $('checkoutNeighborhood').value.trim(),
+
+      address:
+        $('checkoutAddress').value.trim(),
+
+      payment:
+        $('checkoutPayment').value,
+
+      items
+    };
+
+    try{
+
+      const data = await api(
+        '/api/orders',
+        {
+          method:'POST',
+          body:JSON.stringify(payload)
+        }
+      );
+
+      const order =
+        data.order ||
+        data;
+
+      const reference =
+        order.order_ref ||
+        order.reference ||
+        ('B127-' + Date.now());
+
+      const total =
+        order.total ||
+        0;
+
+      cart = [];
+
+      saveCart();
+      renderCart();
+      hideCheckout();
+
+      $('checkoutAddress').value = '';
+
+      showToast(
+        'Commande confirmée : ' + reference,
+        'success'
+      );
+
+      const message =
+        'Bonjour B127 Boutique%0A%0A' +
+        'Nouvelle commande : ' +
+        encodeURIComponent(reference) +
+        '%0A' +
+        'Total : ' +
+        encodeURIComponent(money(total)) +
+        '%0A' +
+        'Client : ' +
+        encodeURIComponent(payload.customer_name) +
+        '%0A' +
+        'Téléphone : ' +
+        encodeURIComponent(payload.phone) +
+        '%0A' +
+        'Ville : ' +
+        encodeURIComponent(payload.city) +
+        '%0A' +
+        'Quartier : ' +
+        encodeURIComponent(payload.neighborhood);
+
+      setTimeout(() => {
+
+        if(
+          confirm(
+            'Commande enregistrée avec succès. Voulez-vous envoyer les détails par WhatsApp ?'
+          )
+        ){
+
+          window.open(
+            'https://wa.me/221783233692?text=' + message,
+            '_blank'
+          );
+        }
+
+      },300);
+
+      setTimeout(() => {
+        showSection('orders');
+      },700);
+
+    }catch(error){
+
+      showToast(
+        error.message || 'Impossible de créer la commande.',
+        'error'
+      );
+    }
+  }
+
+  async function registerUser(){
+
+    const name =
+      $('registerName').value.trim();
+
+    const phone =
+      $('registerPhone').value.trim();
+
+    const email =
+      $('registerEmail').value.trim();
+
+    const password =
+      $('registerPassword').value;
+
+    if(!name || !email || !password){
+
+      showToast(
+        'Nom, email et mot de passe sont obligatoires.',
+        'error'
+      );
+
+      return;
+    }
+
+    if(password.length < 6){
+
+      showToast(
+        'Le mot de passe doit contenir au moins 6 caractères.',
+        'error'
+      );
+
+      return;
+    }
+
+    try{
+
+      const data = await api(
+        '/api/auth/register',
+        {
+          method:'POST',
+          body:JSON.stringify({
+            name,
+            phone,
+            email,
+            password
+          })
+        }
+      );
+
+      token =
+        data.token ||
+        data.accessToken ||
+        '';
+
+      currentUser =
+        data.user ||
+        null;
+
+      saveLocal();
+
+      updateAccountUI();
+
+      showToast(
+        'Compte créé avec succès.',
+        'success'
+      );
+
+      $('registerPassword').value = '';
+
+      showSection('home');
+
+    }catch(error){
+
+      showToast(
+        error.message || 'Impossible de créer le compte.',
+        'error'
+      );
+    }
+  }
+
+  async function loginUser(){
+
+    const email =
+      $('loginEmail').value.trim();
+
+    const password =
+      $('loginPassword').value;
+
+    if(!email || !password){
+
+      showToast(
+        'Email et mot de passe obligatoires.',
+        'error'
+      );
+
+      return;
+    }
+
+    try{
+
+      const data = await api(
+        '/api/auth/login',
+        {
+          method:'POST',
+          body:JSON.stringify({
+            email,
+            password
+          })
+        }
+      );
+
+      token =
+        data.token ||
+        data.accessToken ||
+        '';
+
+      currentUser =
+        data.user ||
+        null;
+
+      saveLocal();
+
+      updateAccountUI();
+
+      await loadFavoriteIds();
+
+      showToast(
+        'Connexion réussie.',
+        'success'
+      );
+
+      showSection('home');
+
+    }catch(error){
+
+      showToast(
+        error.message || 'Email ou mot de passe incorrect.',
+        'error'
+      );
+    }
+  }
+
+  async function loadFavoriteIds(){
+
+    if(!token){
+      favoriteIds = [];
+      return;
+    }
+
+    try{
+
+      const data = await api('/api/favorites');
+
+      const list = Array.isArray(data)
+        ? data
+        : (data.favorites || []);
+
+      favoriteIds = list
+        .map(item =>
+          Number(
+            item.product_id ||
+            item.id ||
+            item.productId
+          )
+        )
+        .filter(Boolean);
+
+    }catch(error){
+
+      favoriteIds = [];
+    }
+  }
+
+  function logoutUser(){
+
+    token = '';
+    currentUser = null;
+    favoriteIds = [];
+
+    saveLocal();
+
+    updateAccountUI();
+
+    showToast('Vous êtes déconnecté.');
+
+    showSection('home');
+  }
+
+  function updateAccountUI(){
+
+    const loggedOut =
+      $('accountLoggedOut');
+
+    const loggedIn =
+      $('accountLoggedIn');
+
+    const sellerNotConnected =
+      $('sellerNotConnected');
+
+    const sellerArea =
+      $('sellerArea');
+
+    const adminNav =
+      $('adminNav');
+
+    if(currentUser){
+
+      loggedOut?.classList.add('hidden');
+      loggedIn?.classList.remove('hidden');
+
+      $('userNameDisplay').textContent =
+        currentUser.name || 'Client';
+
+      $('userInfoDisplay').innerHTML = `
+        <strong>Email :</strong>
+        ${escapeHtml(currentUser.email || '')}
+        <br>
+
+        <strong>Téléphone :</strong>
+        ${escapeHtml(currentUser.phone || 'Non renseigné')}
+        <br>
+
+        <strong>Rôle :</strong>
+        ${escapeHtml(currentUser.role || 'customer')}
+      `;
+
+      sellerNotConnected?.classList.add('hidden');
+      sellerArea?.classList.remove('hidden');
+
+      if(
+        currentUser.role === 'admin'
+      ){
+        adminNav?.classList.remove('hidden');
+      }else{
+        adminNav?.classList.add('hidden');
+      }
+
+    }else{
+
+      loggedOut?.classList.remove('hidden');
+      loggedIn?.classList.add('hidden');
+
+      sellerNotConnected?.classList.remove('hidden');
+      sellerArea?.classList.add('hidden');
+
+      adminNav?.classList.add('hidden');
+    }
+  }
+
+  async function loadOrders(){
+
+    const container =
+      $('ordersList');
+
+    if(!container){
+      return;
+    }
+
+    if(!token){
+
+      container.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">🔐</div>
+
+          <p>
+            Connectez-vous pour consulter vos commandes.
+          </p>
+
+          <button
+            class="btn btn-gold"
+            onclick="showSection('account')"
+            style="margin-top:12px;"
+          >
+            Se connecter
+          </button>
+        </div>
+      `;
+
+      return;
+    }
+
+    try{
+
+      const data =
+        await api('/api/orders');
+
+      const orders =
+        Array.isArray(data)
+          ? data
+          : (data.orders || []);
+
+      if(!orders.length){
+
+        container.innerHTML = `
+          <div class="empty">
+            <div class="empty-icon">📦</div>
+            Vous n'avez encore aucune commande.
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML =
+        orders.map(orderCard).join('');
+
+    }catch(error){
+
+      container.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">⚠️</div>
+          Impossible de charger vos commandes.
+        </div>
+      `;
+    }
+  }
+
+  function statusLabel(status){
+
+    const labels = {
+      pending:'En attente',
+      confirmed:'Confirmée',
+      shipped:'Expédiée',
+      delivered:'Livrée',
+      cancelled:'Annulée'
+    };
+
+    return labels[status] || status || 'Inconnue';
+  }
+
+  function orderCard(order){
+
+    const status =
+      String(order.status || 'pending')
+        .toLowerCase();
+
+    const reference =
+      order.order_ref ||
+      order.reference ||
+      ('#' + order.id);
+
+    const date =
+      order.created_at
+        ? new Date(order.created_at)
+            .toLocaleString('fr-FR')
+        : '';
+
+    return `
+      <div class="order-card">
+
+        <div class="order-head">
+
+          <div>
+            <strong>
+              Commande ${escapeHtml(reference)}
+            </strong>
+
+            <div style="font-size:12px;color:#777;margin-top:5px;">
+              ${escapeHtml(date)}
+            </div>
+          </div>
+
+          <span class="status ${escapeHtml(status)}">
+            ${escapeHtml(statusLabel(status))}
+          </span>
+
+        </div>
+
+        <div style="font-size:13px;line-height:1.7;">
+
+          <strong>Total :</strong>
+          ${money(order.total)}
+
+          <br>
+
+          <strong>Paiement :</strong>
+          ${escapeHtml(
+            order.payment_method ||
+            order.payment ||
+            '—'
+          )}
+
+          <br>
+
+          <strong>Livraison :</strong>
+          ${escapeHtml(order.city || '')},
+          ${escapeHtml(order.neighborhood || '')}
+
+        </div>
+
+      </div>
+    `;
+  }
+</script>
+<script>
+  async function loadSeller(){
+
+    const notConnected =
+      $('sellerNotConnected');
+
+    const area =
+      $('sellerArea');
+
+    if(!token || !currentUser){
+
+      notConnected?.classList.remove('hidden');
+      area?.classList.add('hidden');
+
+      return;
+    }
+
+    notConnected?.classList.add('hidden');
+    area?.classList.remove('hidden');
+
+    try{
+
+      const data =
+        await api('/api/seller');
+
+      const seller =
+        data.seller ||
+        data;
+
+      renderSellerInfo(seller);
+
+      const sellerProducts =
+        data.products ||
+        products.filter(product =>
+          Number(product.seller_id) ===
+          Number(seller.id)
+        );
+
+      renderSellerProducts(sellerProducts);
+
+    }catch(error){
+
+      console.error(error);
+
+      $('sellerInfo').innerHTML = `
+        <p style="color:#777;">
+          Votre espace vendeur est disponible.
+        </p>
+
+        <button
+          class="btn btn-gold"
+          onclick="createSeller()"
+          style="margin-top:10px;"
+        >
+          🏪 Créer ma boutique
+        </button>
+      `;
+
+      $('sellerProducts').innerHTML = `
+        <div class="empty">
+          Aucun produit vendeur à afficher.
+        </div>
+      `;
+    }
+  }
+
+  function renderSellerInfo(seller){
+
+    if(!$('sellerInfo')){
+      return;
+    }
+
+    $('sellerInfo').innerHTML = `
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+        gap:10px;
+      ">
+
+        <div style="
+          background:#f6f6f6;
+          border-radius:8px;
+          padding:13px;
+        ">
+          <small style="color:#777;">Boutique</small>
+          <strong style="display:block;margin-top:4px;">
+            ${escapeHtml(
+              seller.name ||
+              seller.shop_name ||
+              currentUser.name ||
+              'B127 Vendeur'
+            )}
+          </strong>
+        </div>
+
+        <div style="
+          background:#f6f6f6;
+          border-radius:8px;
+          padding:13px;
+        ">
+          <small style="color:#777;">Téléphone</small>
+          <strong style="display:block;margin-top:4px;">
+            ${escapeHtml(
+              seller.phone ||
+              currentUser.phone ||
+              'Non renseigné'
+            )}
+          </strong>
+        </div>
+
+        <div style="
+          background:#f6f6f6;
+          border-radius:8px;
+          padding:13px;
+        ">
+          <small style="color:#777;">Catégorie</small>
+          <strong style="display:block;margin-top:4px;">
+            ${escapeHtml(
+              seller.category ||
+              'Toutes catégories'
+            )}
+          </strong>
+        </div>
+
+      </div>
+    `;
+  }
+
+  function renderSellerProducts(list){
+
+    const container =
+      $('sellerProducts');
+
+    if(!container){
+      return;
+    }
+
+    if(!list.length){
+
+      container.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">📦</div>
+          Aucun produit dans votre boutique.
+        </div>
+      `;
+
+      return;
+    }
+
+    container.innerHTML = list.map(product => `
+
+      <div style="
+        display:flex;
+        align-items:center;
+        gap:12px;
+        padding:12px 0;
+        border-bottom:1px solid #eee;
+        flex-wrap:wrap;
+      ">
+
+        <div style="
+          width:55px;
+          height:55px;
+          border-radius:8px;
+          background:#f1f1f1;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          overflow:hidden;
+          font-size:25px;
+        ">
+          ${productVisual(product)}
+        </div>
+
+        <div style="flex:1;min-width:180px;">
+
+          <strong>
+            ${escapeHtml(product.name)}
+          </strong>
+
+          <div style="
+            color:#777;
+            font-size:12px;
+            margin-top:4px;
+          ">
+            ${escapeHtml(product.category || 'Autre')}
+            · ${money(product.price)}
+            · Stock : ${Number(product.stock || 0)}
+          </div>
+
+        </div>
+
+        <div style="
+          display:flex;
+          gap:7px;
+          flex-wrap:wrap;
+        ">
+
+          <button
+            class="btn btn-dark"
+            style="padding:7px 10px;font-size:11px;"
+            onclick="editProduct(${Number(product.id)})"
+          >
+            ✏️ Modifier
+          </button>
+
+          <button
+            class="btn btn-danger"
+            style="padding:7px 10px;font-size:11px;"
+            onclick="deleteProduct(${Number(product.id)})"
+          >
+            🗑️ Supprimer
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join('');
+  }
+
+  async function createSeller(){
+
+    if(!token){
+
+      showToast(
+        'Connectez-vous avant de créer une boutique.',
+        'error'
+      );
+
+      showSection('account');
+
+      return;
+    }
+
+    const name =
+      prompt(
+        'Nom de votre boutique :',
+        currentUser?.name || 'Ma boutique'
+      );
+
+    if(name === null){
+      return;
+    }
+
+    const shopName =
+      name.trim();
+
+    if(!shopName){
+
+      showToast(
+        'Le nom de la boutique est obligatoire.',
+        'error'
+      );
+
+      return;
+    }
+
+    const phone =
+      prompt(
+        'Téléphone de la boutique :',
+        currentUser?.phone || '+221 '
+      );
+
+    if(phone === null){
+      return;
+    }
+
+    const category =
+      prompt(
+        'Catégorie principale :',
+        'Mode'
+      );
+
+    if(category === null){
+      return;
+    }
+
+    try{
+
+      const data =
+        await api(
+          '/api/seller',
+          {
+            method:'POST',
+            body:JSON.stringify({
+              name:shopName,
+              phone:phone.trim(),
+              category:category.trim()
+            })
+          }
+        );
+
+      if(data.user){
+        currentUser = data.user;
+      }
+
+      if(data.token){
+        token = data.token;
+      }
+
+      saveLocal();
+
+      updateAccountUI();
+
+      showToast(
+        'Votre boutique vendeur a été créée.',
+        'success'
+      );
+
+      await loadSeller();
+      await loadProducts();
+
+    }catch(error){
+
+      showToast(
+        error.message ||
+        'Impossible de créer la boutique.',
+        'error'
+      );
+    }
+  }
+
+  async function createProduct(){
+
+    if(!token){
+
+      showToast(
+        'Connectez-vous pour ajouter un produit.',
+        'error'
+      );
+
+      return;
+    }
+
+    const name =
+      $('productName').value.trim();
+
+    const price =
+      Number($('productPrice').value);
+
+    const category =
+      $('productCategory').value.trim();
+
+    const stock =
+      Number($('productStock').value);
+
+    const description =
+      $('productDescription').value.trim();
+
+    const image =
+      $('productImage').value.trim();
+
+    const icon =
+      $('productIcon').value.trim();
+
+    if(!name){
+
+      showToast(
+        'Le nom du produit est obligatoire.',
+        'error'
+      );
+
+      return;
+    }
+
+    if(!Number.isFinite(price) || price < 0){
+
+      showToast(
+        'Veuillez saisir un prix valide.',
+        'error'
+      );
+
+      return;
+    }
+
+    if(!category){
+
+      showToast(
+        'La catégorie est obligatoire.',
+        'error'
+      );
+
+      return;
+    }
+
+    if(!Number.isInteger(stock) || stock < 0){
+
+      showToast(
+        'Le stock doit être un nombre entier positif.',
+        'error'
+      );
+
+      return;
+    }
+
+    try{
+
+      const data =
+        await api(
+          '/api/products',
+          {
+            method:'POST',
+            body:JSON.stringify({
+              name,
+              price,
+              category,
+              description,
+              image,
+              icon:icon || '🛍️',
+              stock
+            })
+          }
+        );
+
+      showToast(
+        'Produit ajouté avec succès.',
+        'success'
+      );
+
+      $('productName').value = '';
+      $('productPrice').value = '';
+      $('productCategory').value = '';
+      $('productStock').value = '1';
+      $('productDescription').value = '';
+      $('productImage').value = '';
+      $('productIcon').value = '';
+
+      await loadProducts();
+      await loadSeller();
+
+    }catch(error){
+
+      showToast(
+        error.message ||
+        'Impossible d’ajouter le produit.',
+        'error'
+      );
+    }
+  }
+
+  async function editProduct(productId){
+
+    const product =
+      products.find(
+        p => Number(p.id) === Number(productId)
+      );
+
+    if(!product){
+
+      showToast(
+        'Produit introuvable.',
+        'error'
+      );
+
+      return;
+    }
+
+    const name =
+      prompt(
+        'Nom du produit :',
+        product.name || ''
+      );
+
+    if(name === null){
+      return;
+    }
+
+    const price =
+      prompt(
+        'Prix en FCFA :',
+        product.price || 0
+      );
+
+    if(price === null){
+      return;
+    }
+
+    const category =
+      prompt(
+        'Catégorie :',
+        product.category || ''
+      );
+
+    if(category === null){
+      return;
+    }
+
+    const stock =
+      prompt(
+        'Stock :',
+        product.stock || 0
+      );
+
+    if(stock === null){
+      return;
+    }
+
+    const description =
+      prompt(
+        'Description :',
+        product.description || ''
+      );
+
+    if(description === null){
+      return;
+    }
+
+    const image =
+      prompt(
+        'URL de l’image :',
+        product.image || ''
+      );
+
+    if(image === null){
+      return;
+    }
+
+    const parsedPrice =
+      Number(price);
+
+    const parsedStock =
+      Number(stock);
+
+    if(
+      !Number.isFinite(parsedPrice) ||
+      parsedPrice < 0
+    ){
+
+      showToast(
+        'Prix invalide.',
+        'error'
+      );
+
+      return;
+    }
+
+    if(
+      !Number.isInteger(parsedStock) ||
+      parsedStock < 0
+    ){
+
+      showToast(
+        'Stock invalide.',
+        'error'
+      );
+
+      return;
+    }
+
+    try{
+
+      await api(
+        '/api/products/' + Number(productId),
+        {
+          method:'PUT',
+          body:JSON.stringify({
+            name:name.trim(),
+            price:parsedPrice,
+            category:category.trim(),
+            description:description.trim(),
+            image:image.trim(),
+            icon:product.icon || '🛍️',
+            stock:parsedStock
+          })
+        }
+      );
+
+      showToast(
+        'Produit modifié avec succès.',
+        'success'
+      );
+
+      await loadProducts();
+      await loadSeller();
+
+    }catch(error){
+
+      showToast(
+        error.message ||
+        'Impossible de modifier le produit.',
+        'error'
+      );
+    }
+  }
+
+  async function deleteProduct(productId){
+
+    const product =
+      products.find(
+        p => Number(p.id) === Number(productId)
+      );
+
+    if(!product){
+      return;
+    }
+
+    const confirmed =
+      confirm(
+        'Supprimer le produit "' +
+        product.name +
+        '" ?'
+      );
+
+    if(!confirmed){
+      return;
+    }
+
+    try{
+
+      await api(
+        '/api/products/' + Number(productId),
+        {
+          method:'DELETE'
+        }
+      );
+
+      cart =
+        cart.filter(
+          item =>
+            Number(item.id) !== Number(productId)
+        );
+
+      saveCart();
+
+      showToast(
+        'Produit supprimé.',
+        'success'
+      );
+
+      await loadProducts();
+      await loadSeller();
+
+    }catch(error){
+
+      showToast(
+        error.message ||
+        'Impossible de supprimer le produit.',
+        'error'
+      );
+    }
+  }
+
+  async function loadAdmin(){
+
+    const container =
+      $('adminContent');
+
+    if(!container){
+      return;
+    }
+
+    if(
+      !currentUser ||
+      currentUser.role !== 'admin'
+    ){
+
+      container.innerHTML = `
+        <div class="panel">
+          <div class="empty">
+            <div class="empty-icon">🔐</div>
+            Accès réservé à l'administration.
+          </div>
+        </div>
+      `;
+
+      return;
+    }
+
+    try{
+
+      const [
+        summaryData,
+        ordersData
+      ] = await Promise.all([
+        api('/api/admin/summary'),
+        api('/api/admin/orders')
+      ]);
+
+      const summary =
+        summaryData.summary ||
+        summaryData;
+
+      const orders =
+        Array.isArray(ordersData)
+          ? ordersData
+          : (ordersData.orders || []);
+
+      container.innerHTML = `
+
+        <div class="stats">
+
+          <div class="stat">
+            <small>Utilisateurs</small>
+            <strong>
+              ${Number(
+                summary.users ||
+                summary.user_count ||
+                0
+              )}
+            </strong>
+          </div>
+
+          <div class="stat">
+            <small>Produits</small>
+            <strong>
+              ${Number(
+                summary.products ||
+                summary.product_count ||
+                0
+              )}
+            </strong>
+          </div>
+
+          <div class="stat">
+            <small>Commandes</small>
+            <strong>
+              ${Number(
+                summary.orders ||
+                summary.order_count ||
+                0
+              )}
+            </strong>
+          </div>
+
+          <div class="stat">
+            <small>Chiffre d'affaires</small>
+            <strong style="font-size:18px;">
+              ${money(
+                summary.revenue ||
+                summary.total_revenue ||
+                0
+              )}
+            </strong>
+          </div>
+
+        </div>
+
+        <div class="panel">
+
+          <h3>📦 Gestion des commandes</h3>
+
+          <div id="adminOrders">
+            ${renderAdminOrdersHtml(orders)}
+          </div>
+
+        </div>
+
+      `;
+
+    }catch(error){
+
+      container.innerHTML = `
+        <div class="panel">
+          <div class="empty">
+            <div class="empty-icon">⚠️</div>
+            Impossible de charger le tableau de bord.
+          </div>
+        </div>
+      `;
+
+      showToast(
+        error.message ||
+        'Erreur administration.',
+        'error'
+      );
+    }
+  }
+
+  function renderAdminOrdersHtml(orders){
+
+    if(!orders.length){
+
+      return `
+        <div class="empty">
+          Aucune commande.
+        </div>
+      `;
+    }
+
+    return orders.map(order => {
+
+      const status =
+        String(order.status || 'pending')
+          .toLowerCase();
+
+      const reference =
+        order.order_ref ||
+        order.reference ||
+        ('#' + order.id);
+
+      return `
+        <div style="
+          border-bottom:1px solid #eee;
+          padding:14px 0;
+        ">
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            gap:10px;
+            flex-wrap:wrap;
+          ">
+
+            <div>
+              <strong>
+                ${escapeHtml(reference)}
+              </strong>
+
+              <div style="
+                font-size:12px;
+                color:#777;
+                margin-top:4px;
+              ">
+                ${escapeHtml(
+                  order.customer_name ||
+                  order.name ||
+                  'Client'
+                )}
+                ·
+                ${escapeHtml(
+                  order.phone || ''
+                )}
+              </div>
+
+              <div style="
+                font-size:12px;
+                color:#777;
+                margin-top:3px;
+              ">
+                ${escapeHtml(order.city || '')},
+                ${escapeHtml(order.neighborhood || '')}
+              </div>
+            </div>
+
+            <strong>
+              ${money(order.total)}
+            </strong>
+
+          </div>
+
+          <div style="
+            display:flex;
+            align-items:center;
+            gap:8px;
+            margin-top:10px;
+            flex-wrap:wrap;
+          ">
+
+            <span class="status ${escapeHtml(status)}">
+              ${escapeHtml(statusLabel(status))}
+            </span>
+
+            <select
+              onchange="updateOrderStatus(${Number(order.id)},this.value)"
+              style="
+                padding:7px;
+                border:1px solid #ccc;
+                border-radius:6px;
+              "
+            >
+              <option
+                value="pending"
+                ${status === 'pending' ? 'selected' : ''}
+              >
+                En attente
+              </option>
+
+              <option
+                value="confirmed"
+                ${status === 'confirmed' ? 'selected' : ''}
+              >
+                Confirmée
+              </option>
+
+              <option
+                value="shipped"
+                ${status === 'shipped' ? 'selected' : ''}
+              >
+                Expédiée
+              </option>
+
+              <option
+                value="delivered"
+                ${status === 'delivered' ? 'selected' : ''}
+              >
+                Livrée
+              </option>
+
+              <option
+                value="cancelled"
+                ${status === 'cancelled' ? 'selected' : ''}
+              >
+                Annulée
+              </option>
+            </select>
+
+          </div>
+
+        </div>
+      `;
+
+    }).join('');
+  }
+
+  async function updateOrderStatus(orderId,status){
+
+    const allowed = [
+      'pending',
+      'confirmed',
+      'shipped',
+      'delivered',
+      'cancelled'
+    ];
+
+    if(!allowed.includes(status)){
+      return;
+    }
+
+    try{
+
+      await api(
+        '/api/admin/orders/' + Number(orderId),
+        {
+          method:'PATCH',
+          body:JSON.stringify({
+            status
+          })
+        }
+      );
+
+      showToast(
+        'Statut de la commande mis à jour.',
+        'success'
+      );
+
+      await loadAdmin();
+
+    }catch(error){
+
+      showToast(
+        error.message ||
+        'Impossible de modifier la commande.',
+        'error'
+      );
+
+      await loadAdmin();
+    }
+  }
+
+  function openWhatsApp(){
+
+    const message =
+      'Bonjour B127 Boutique, je souhaite avoir des informations.';
+
+    window.open(
+      'https://wa.me/221783233692?text=' +
+      encodeURIComponent(message),
+      '_blank'
+    );
+  }
+
+  function updateYear(){
+
+    if($('currentYear')){
+      $('currentYear').textContent =
+        new Date().getFullYear();
+    }
+  }
+
+  async function initializeApp(){
+
+    updateYear();
+    updateCartCount();
+    updateAccountUI();
+
+    renderCart();
+
+    try{
+      await loadCategories();
+    }catch(error){
+      console.error(error);
+    }
+
+    try{
+      await loadProducts();
+    }catch(error){
+      console.error(error);
+    }
+
+    if(token){
+
+      try{
+
+        const data =
+          await api('/api/auth/me');
+
+        currentUser =
+          data.user ||
+          data;
+
+        saveLocal();
+
+      }catch(error){
+
+        token = '';
+        currentUser = null;
+
+        saveLocal();
+      }
+
+      updateAccountUI();
+
+      await loadFavoriteIds();
+    }
+
+    renderProducts(
+      $('searchInput')?.value.trim() || ''
+    );
+
+    renderHomeProducts();
+    renderCart();
+  }
+
+  window.addEventListener(
+    'storage',
+    function(){
+      token =
+        localStorage.getItem('b127_token') || '';
+
+      currentUser =
+        JSON.parse(
+          localStorage.getItem('b127_user') || 'null'
+        );
+
+      cart =
+        JSON.parse(
+          localStorage.getItem('b127_cart') || '[]'
+        );
+
+      updateCartCount();
+      updateAccountUI();
+      renderCart();
+    }
+  );
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    initializeApp
+  );
+</script>
+<script>
+  // Protection contre les erreurs si certaines fonctions
+  // sont appelées avant le chargement complet de la page.
+  window.addEventListener('error', function(event){
+    console.error('B127 error:', event.error || event.message);
+  });
+
+  // Initialisation finale de l'application.
+  if(document.readyState === 'loading'){
+    // DOMContentLoaded s'occupera de l'initialisation.
+  }else{
+    initializeApp();
+  }
 </script>
 
 </body>
